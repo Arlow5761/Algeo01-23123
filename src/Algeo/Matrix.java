@@ -2,6 +2,67 @@ package Algeo;
 
 public class Matrix
 {
+    // UTILITY OPERATIONS
+
+    static public Matrix GetIdentity(int size)
+    {
+        Matrix identityMatrix = new Matrix(size, size);
+
+        for (int i = 0; i < size; i++)
+        {
+            identityMatrix.Set(i, i, 1);
+        }
+
+        return identityMatrix;
+    }
+
+    static public Matrix Append(Matrix A, Matrix B)
+    {
+        if (A.GetRowCount() != B.GetColumnCount()) return null;
+
+        Matrix newMatrix = new Matrix(A.GetRowCount(), A.GetColumnCount() + B.GetColumnCount());
+
+        for (int i = 0; i < A.GetRowCount(); i++)
+        {
+            for (int j = 0; j < A.GetColumnCount(); j++)
+            {
+                newMatrix.Set(i, j, A.Get(i, j));
+            }
+
+            for (int j = 0; j < B.GetColumnCount(); j++)
+            {
+                newMatrix.Set(i, A.GetColumnCount() + j, B.Get(i, j));
+            }
+        }
+
+        return newMatrix;
+    }
+
+    public Matrix GetMinor(int i, int j)
+    {
+        Matrix minor = new Matrix(GetRowCount() - 1, GetColumnCount() - 1);
+        int n = 0;
+        int m = 0;
+
+        for (int a = 0; a < GetRowCount(); a++)
+        {
+            if (a == i) continue;
+
+            for (int b = 0; b < GetColumnCount(); b++)
+            {
+                if (b == j) continue;
+
+                minor.Set(n, m, Get(a, b));
+
+                m++;
+            }
+
+            n++;
+        }
+
+        return minor;
+    }
+
     // BASIC OPERATIONS //
 
     static public Matrix Add(Matrix A, Matrix B)
