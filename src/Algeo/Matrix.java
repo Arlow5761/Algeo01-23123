@@ -1,6 +1,6 @@
 package Algeo;
 
-public class Matrix
+public class Matrix implements Cloneable
 {
     // BASIC OPERATIONS //
 
@@ -150,7 +150,12 @@ public class Matrix
 
     public Matrix(float[][] data)
     {
-        this.data = data;
+        this.data = data.clone();
+    }
+
+    public Object clone()
+    {
+        return new Matrix(data);
     }
 
     private float[][] data;
