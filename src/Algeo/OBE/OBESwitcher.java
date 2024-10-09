@@ -6,6 +6,18 @@ public class OBESwitcher
 {
     static public Matrix Switch(Matrix m, int rowA, int rowB)
     {
-        return new Matrix(1, 1);
+        Matrix cola = new Matrix(m.GetRowCount(),m.GetColumnCount());
+        //Copy m to new Matrix cola
+        for (int i=0;i<cola.GetRowCount();i++) {
+            for (int j=0;j<cola.GetColumnCount();j++)
+                cola.Set(i,j,m.Get(i,j));
+        }
+
+        float[] temp = cola.GetRow(rowA);
+
+        cola.SetRow(rowA, cola.GetRow(rowB));
+        cola.SetRow(rowB, temp);
+
+        return cola;
     }
 }
