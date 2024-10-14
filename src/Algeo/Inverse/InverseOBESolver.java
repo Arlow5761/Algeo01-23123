@@ -31,7 +31,7 @@ public class InverseOBESolver
 
     public InverseOBESolver(Matrix m)
     {
-        matrix = m;
+        matrix = (Matrix) m.clone();
     }
 
     private boolean solved;

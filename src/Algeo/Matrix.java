@@ -217,7 +217,16 @@ public class Matrix implements Cloneable
 
     public Object clone()
     {
-        return new Matrix(data);
+        float[][] copiedData = new float[data.length][data[0].length];
+        for (int i = 0; i < data.length; i++)
+        {
+            for (int j = 0; j < data[i].length; j++)
+            {
+                copiedData[i][j] = data[i][j];
+            }
+        }
+
+        return new Matrix(copiedData);
     }
 
     private float[][] data;
