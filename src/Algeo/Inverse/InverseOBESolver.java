@@ -1,6 +1,7 @@
 package Algeo.Inverse;
 
 import Algeo.Matrix;
+import Algeo.LinearAlgebra.GaussJordanSolver;
 
 public class InverseOBESolver
 {
@@ -11,38 +12,25 @@ public class InverseOBESolver
 
     public Matrix Solve()
     {
-        do
-        {
-            Step();
+        int dimension = matrix.GetColumnCount();
+        Matrix siInvers = new Matrix(dimension,dimension);
+        Matrix siMerge = GaussJordanSolver.Solve(Matrix.Append(matrix, Matrix.GetIdentity(dimension))).GetSolution();
+        for(int i=0;i<siMerge.GetRowCount();i++) {
+            for (int j=dimension;j<siMerge.GetColumnCount();j++) {
+                siInvers.Set(i, j-dimension, siMerge.Get(i, j));
+            }
         }
-        while (!solved);
-
-        return GetSolution();
+        return siInvers;
     }
 
-    public void Step()
-    {
-
-    }
 
     public Matrix GetMatrix()
     {
         return matrix;
     }
 
-    public Matrix GetSolution()
-    {
-        return GetMatrix();
-    }
-
-    public boolean IsSolved()
-    {
-        return solved;
-    }
-
     public InverseOBESolver(Matrix m)
     {
-        solved = false;
         matrix = m;
     }
 
