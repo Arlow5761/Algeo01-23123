@@ -94,6 +94,11 @@ public class GaussSolver
         return this;
     }
 
+    public Matrix GetMatrix()
+    {
+        return matrix;
+    }
+
     public float[][] GetSolution()
     {
         return equalities;
