@@ -6,7 +6,7 @@ public class OBEScaler
 {
     static public Matrix Scale(Matrix m, int row, float scale)
     {
-        Matrix scaledMatrix = new Matrix(m.GetRowCount(),m.GetColumnCount());
+        Matrix scaledMatrix = (Matrix) m.clone();
 
         for ( int i = 0 ; i < m.GetColumnCount(); i++){
             scaledMatrix.Set(row, i, scale* m.Get(row,i));
