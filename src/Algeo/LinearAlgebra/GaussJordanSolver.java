@@ -67,7 +67,7 @@ public class GaussJordanSolver
 
         for (int i = matrix.GetRowCount() - 1; i > 0; i--)
         {
-            int mainVarPos = -1;
+            int mainVarPos = 0;
 
             for (; (mainVarPos < matrix.GetColumnCount()) && (matrix.Get(i, mainVarPos) != 1); mainVarPos++);
 
