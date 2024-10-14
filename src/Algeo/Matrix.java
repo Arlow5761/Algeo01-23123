@@ -42,10 +42,11 @@ public class Matrix implements Cloneable
     {
         Matrix minor = new Matrix(GetRowCount() - 1, GetColumnCount() - 1);
         int n = 0;
-        int m = 0;
 
         for (int a = 0; a < GetRowCount(); a++)
         {
+            int m = 0;
+
             if (a == i) continue;
 
             for (int b = 0; b < GetColumnCount(); b++)
