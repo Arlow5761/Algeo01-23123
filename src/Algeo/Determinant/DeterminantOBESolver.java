@@ -1,6 +1,7 @@
 package Algeo.Determinant;
 
 import Algeo.Matrix;
+import Algeo.LinearAlgebra.GaussSolver;
 
 public class DeterminantOBESolver
 {
@@ -11,43 +12,29 @@ public class DeterminantOBESolver
 
     public float Solve()
     {
-        do
+        solution = 0;
+
+        matrix = GaussSolver.Solve(matrix).GetMatrix();
+
+        for (int i = 0; i < matrix.GetColumnCount(); i++)
         {
-            Step();
+            solution += matrix.Get(i, i);
         }
-        while (!solved);
 
         return GetSolution();
     }
 
     public float GetSolution()
     {
-        // Get solution from finished state
-
-        return 0;
-    }
-
-    public void Step()
-    {
-        // Update object state to get one step closer to finished state
-    }
-
-    public boolean IsSolved()
-    {
-        return solved;
-    }
-
-    public Matrix GetMatrix()
-    {
-        return matrix;
+        return solution;
     }
 
     public DeterminantOBESolver(Matrix m)
     {
-        solved = false;
+        solution = 0;
         matrix = m;
     }
 
     private Matrix matrix;
-    private boolean solved;
+    private float solution;
 }
