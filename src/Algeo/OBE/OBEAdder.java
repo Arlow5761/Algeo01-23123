@@ -16,15 +16,14 @@ public class OBEAdder
 
                 for (int j = 0; j < newRowData.length; j++)
                 {
-                    newRowData[i] *= scale;
-                    newRowData[i] += newMatrix.Get(targetRow, i);
+                    newRowData[j] = m.Get(targetRow, j) + newRowData[j] * scale;
                 }
 
                 newMatrix.SetRow(targetRow, newRowData);
             }
             else
             {
-                newMatrix.SetRow(i, m.GetRow(i));
+                newMatrix.SetRow(i, m.GetRow(i).clone());
             }
         }
 

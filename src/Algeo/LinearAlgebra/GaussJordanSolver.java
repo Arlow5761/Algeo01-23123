@@ -19,12 +19,13 @@ public class GaussJordanSolver
         int leadOneRow = 0;
         int leadOneCol = 0;
 
-        for (int j = 0; j < matrix.GetColumnCount(); j++)
+        for (int j = 0; (j < matrix.GetColumnCount()) && (leadOneCol < matrix.GetColumnCount()) && (leadOneRow < matrix.GetRowCount()); j++)
         {
             boolean zeroCol = false;
 
             for (int i = 0; (i < matrix.GetRowCount()) && !zeroCol; i++)
             {
+
                 if ((i == leadOneRow) && (j == leadOneCol))
                 {
                     if (matrix.Get(i, j) == 0)
@@ -50,9 +51,10 @@ public class GaussJordanSolver
                     if (matrix.Get(i, j) != 1)
                     {
                         matrix = OBEScaler.Scale(matrix, leadOneRow, 1/matrix.Get(i, j));
-                        leadOneRow++;
-                        leadOneCol++;
                     }
+
+                    leadOneRow++;
+                    leadOneCol++;
                 }
                 else if ((i >= leadOneRow) && (matrix.Get(i, j) != 0))
                 {
