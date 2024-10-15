@@ -130,6 +130,21 @@ public class Matrix implements Cloneable
         return new Matrix(matrixData);
     }
 
+    static public Matrix Multiply(float k, Matrix m)
+    {
+        Matrix result = new Matrix(m.GetRowCount(), m.GetColumnCount());
+
+        for (int i = 0; i < result.GetRowCount(); i++)
+        {
+            for (int j = 0; j < result.GetColumnCount(); j++)
+            {
+                result.Set(i, j, m.Get(i, j) * k);
+            }
+        }
+
+        return result;
+    }
+
     static public Matrix Transpose(Matrix m)
     {
         float[][] matrixData = new float[m.GetColumnCount()][m.GetRowCount()];
