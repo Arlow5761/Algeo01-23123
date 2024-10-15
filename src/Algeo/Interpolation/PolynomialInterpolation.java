@@ -1,6 +1,6 @@
 package Algeo.Interpolation;
 
-public class BicubicSpineInterpolator
+public class PolynomialInterpolation
 {
     
 }
