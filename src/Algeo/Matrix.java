@@ -175,7 +175,7 @@ public class Matrix implements Cloneable
 
     public void SetRow(int i, float[] rowData)
     {
-        data[i] = rowData;
+        data[i] = rowData.clone();
     }
 
     public void SetColumn(int j, float[] columnData)
