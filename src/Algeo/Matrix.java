@@ -18,7 +18,7 @@ public class Matrix implements Cloneable
 
     static public Matrix Append(Matrix A, Matrix B)
     {
-        if (A.GetRowCount() != B.GetColumnCount()) return null;
+        if (A.GetRowCount() != B.GetRowCount()) return null;
 
         Matrix newMatrix = new Matrix(A.GetRowCount(), A.GetColumnCount() + B.GetColumnCount());
 
