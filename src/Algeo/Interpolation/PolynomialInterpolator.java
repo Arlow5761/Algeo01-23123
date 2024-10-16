@@ -1,45 +1,60 @@
 package Algeo.Interpolation;
 
 import Algeo.Matrix;
+import Algeo.LinearAlgebra.GaussSolver;
 
 public class PolynomialInterpolator {
 
     public static float interpolate(Matrix m, float x) {
         int n = m.GetRowCount();
-        float[] coef = new float[n];
-        float[] x_values = new float[n];
+        Matrix A = new Matrix(n, n);
+        Matrix b = new Matrix(n, 1);
 
-        //masukin x
         for (int i = 0; i < n; i++) {
-            x_values[i] = m.Get(i, 0); 
-        }
+            float xi = m.Get(i, 0);
+            float yi = m.Get(i, 1);
+            b.Set(i, 0, yi);
 
-        float[][] dividedDiff = new float[n][n];
-
-        //masukin y
-        for (int i = 0; i < n; i++) {
-            dividedDiff[i][0] = m.Get(i, 1); 
-        }
-  
-        for (int j = 1; j < n; j++) {
-            for (int i = 0; i < n - j; i++) {
-                dividedDiff[i][j] = (dividedDiff[i + 1][j - 1] - dividedDiff[i][j - 1]) / (x_values[i + j] - x_values[i]);
+            // Vandermonde 
+            for (int j = 0; j < n; j++) {
+                A.Set(i, j, (float) Math.pow(xi, j));
             }
         }
 
+        Matrix augmentedMatrix = augmentMatrices(A, b);
+
+        // Eleminasi Gauss
+        GaussSolver solver = new GaussSolver(augmentedMatrix);
+        solver.Solve();
+        float[] coeffs = solver.GetSingleSolution();
+
+        if (coeffs == null) {
+            System.out.println("No unique solution found.");
+            return Float.NaN;
+        }
+
+        float y = 0.0f;
         for (int i = 0; i < n; i++) {
-            coef[i] = dividedDiff[0][i];
+            y += coeffs[i] * (float) Math.pow(x, i);
         }
 
-        float y = coef[0];
-        for (int i = 1; i < n; i++) {
-            float term = coef[i];
-            for (int j = 0; j < i; j++) {
-                term *= (x - x_values[j]);
+        return y;
+    }
+
+    //Augmented Matrix
+    private static Matrix augmentMatrices(Matrix A, Matrix b) {
+        int rows = A.GetRowCount();
+        int colsA = A.GetColumnCount();
+
+        Matrix augmented = new Matrix(rows, colsA + 1);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < colsA; j++) {
+                augmented.Set(i, j, A.Get(i, j));
             }
-            y += term;
+            augmented.Set(i, colsA, b.Get(i, 0));
         }
 
-        return y; 
+        return augmented;
     }
 }
