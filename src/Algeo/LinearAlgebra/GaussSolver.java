@@ -104,6 +104,38 @@ public class GaussSolver
         return equalities;
     }
 
+    public float[] GetSingleSolution()
+    {
+        float[] solutions = new float[matrix.GetColumnCount() - 1];
+        int varOffset = -1;
+
+        for (int i = 0; i < equalities.length; i++)
+        {
+            varOffset = -1;
+
+            for (int j = 0; j < equalities[i].length - 1; j++)
+            {
+                if ((varOffset == -1) && (equalities[i][j] == 1))
+                {
+                    varOffset = j;
+                }
+                else if ((varOffset != -1) && (equalities[i][j] != 0))
+                {
+                    solutions[varOffset] = Float.NaN;
+                    varOffset = -1;
+                    break;
+                }
+            }
+
+            if (varOffset != -1)
+            {
+                solutions[varOffset] = equalities[i][equalities[i].length - 1];
+            }
+        }
+
+        return solutions;
+    }
+
     public GaussSolver(Matrix m)
     {
         equalities = new float[m.GetRowCount()][m.GetColumnCount()];

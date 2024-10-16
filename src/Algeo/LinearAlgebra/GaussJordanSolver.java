@@ -87,6 +87,38 @@ public class GaussJordanSolver
         return matrix;
     }
 
+    public float[] GetSingleSolution()
+    {
+        float[] solutions = new float[matrix.GetColumnCount() - 1];
+        int varOffset = -1;
+
+        for (int i = 0; i < matrix.GetRowCount(); i++)
+        {
+            varOffset = -1;
+
+            for (int j = 0; j < matrix.GetColumnCount() - 1; j++)
+            {
+                if ((varOffset == -1) && (matrix.Get(i, j) == 1))
+                {
+                    varOffset = j;
+                }
+                else if ((varOffset != -1) && (matrix.Get(i, j) != 0))
+                {
+                    solutions[varOffset] = Float.NaN;
+                    varOffset = -1;
+                    break;
+                }
+            }
+
+            if (varOffset != -1)
+            {
+                solutions[varOffset] = matrix.Get(i, matrix.GetColumnCount() - 1);
+            }
+        }
+
+        return solutions;
+    }
+
     public GaussJordanSolver(Matrix m)
     {
         matrix = m;
