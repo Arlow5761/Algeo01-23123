@@ -29,7 +29,7 @@ public class PolynomialInterpolator {
         float[] coeffs = solver.GetSingleSolution();
 
         if (coeffs == null) {
-            System.out.println("No unique solution found.");
+            System.out.println("Tidak ada solusi unik");
             return Float.NaN;
         }
 
