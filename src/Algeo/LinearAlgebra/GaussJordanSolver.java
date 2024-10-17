@@ -87,9 +87,9 @@ public class GaussJordanSolver
         return matrix;
     }
 
-    public float[] GetSingleSolution()
+    public double[] GetSingleSolution()
     {
-        float[] solutions = new float[matrix.GetColumnCount() - 1];
+        double[] solutions = new double[matrix.GetColumnCount() - 1];
         int varOffset = -1;
 
         for (int i = 0; i < matrix.GetRowCount(); i++)
@@ -104,7 +104,7 @@ public class GaussJordanSolver
                 }
                 else if ((varOffset != -1) && (matrix.Get(i, j) != 0))
                 {
-                    solutions[varOffset] = Float.NaN;
+                    solutions[varOffset] = Double.NaN;
                     varOffset = -1;
                     break;
                 }

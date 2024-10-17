@@ -13,7 +13,7 @@ public class OBESwitcher
                 cola.Set(i,j,m.Get(i,j));
         }
 
-        float[] temp = cola.GetRow(rowA);
+        double[] temp = cola.GetRow(rowA);
 
         cola.SetRow(rowA, cola.GetRow(rowB));
         cola.SetRow(rowB, temp);

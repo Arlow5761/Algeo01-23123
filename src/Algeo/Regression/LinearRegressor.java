@@ -4,8 +4,8 @@ import Algeo.LinearAlgebra.GaussJordanSolver;
 import Algeo.Matrix;
 
 public class LinearRegressor {
-    public static float[] solve(float[][] input) {
-        float[] result;
+    public static double[] solve(double[][] input) {
+        double[] result;
         Matrix m = new Matrix(input);
         Matrix matrix1s = new Matrix(m.GetRowCount(), 1);
         Matrix matrixYs = new Matrix(m.GetRowCount(), 1);
