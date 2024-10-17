@@ -5,7 +5,7 @@ import Algeo.Inverse.*;
 
 public class InverseSolver
 {
-    static public float[] Solve(Matrix m, float[] b)
+    static public double[] Solve(Matrix m, double[] b)
     {
         Matrix temp = new Matrix(b.length, 1);
         temp.SetColumn(0, b.clone());

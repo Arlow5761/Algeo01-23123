@@ -73,7 +73,7 @@ public class Matrix implements Cloneable
             return null;
         }
 
-        float[][] matrixData = new float[A.GetRowCount()][B.GetColumnCount()];
+        double[][] matrixData = new double[A.GetRowCount()][B.GetColumnCount()];
 
         for (int i = 0; i < A.GetRowCount(); i++)
         {
@@ -93,7 +93,7 @@ public class Matrix implements Cloneable
             return null;
         }
 
-        float[][] matrixData = new float[A.GetRowCount()][B.GetColumnCount()];
+        double[][] matrixData = new double[A.GetRowCount()][B.GetColumnCount()];
 
         for (int i = 0; i < A.GetRowCount(); i++)
         {
@@ -110,13 +110,13 @@ public class Matrix implements Cloneable
     {
         if ((A.GetColumnCount() != B.GetRowCount())) return null;
 
-        float[][] matrixData = new float[A.GetRowCount()][B.GetColumnCount()];
+        double[][] matrixData = new double[A.GetRowCount()][B.GetColumnCount()];
 
         for (int i = 0; i < A.GetRowCount(); i++)
         {
             for (int j = 0; j < B.GetColumnCount(); j++)
             {
-                float sum = 0;
+                double sum = 0;
 
                 for (int k = 0; k < A.GetColumnCount(); k++)
                 {
@@ -130,7 +130,7 @@ public class Matrix implements Cloneable
         return new Matrix(matrixData);
     }
 
-    static public Matrix Multiply(float k, Matrix m)
+    static public Matrix Multiply(double k, Matrix m)
     {
         Matrix result = new Matrix(m.GetRowCount(), m.GetColumnCount());
 
@@ -147,7 +147,7 @@ public class Matrix implements Cloneable
 
     static public Matrix Transpose(Matrix m)
     {
-        float[][] matrixData = new float[m.GetColumnCount()][m.GetRowCount()];
+        double[][] matrixData = new double[m.GetColumnCount()][m.GetRowCount()];
 
         for (int i = 0; i < m.GetRowCount(); i++)
         {
@@ -162,24 +162,24 @@ public class Matrix implements Cloneable
 
     // ACCESSORS //
 
-    public float Get(int i, int j)
+    public double Get(int i, int j)
     {
         return this.data[i][j];
     }
 
-    public void Set(int i, int j, float v)
+    public void Set(int i, int j, double v)
     {
         this.data[i][j] = v;
     }
 
-    public float[] GetRow(int i)
+    public double[] GetRow(int i)
     {
         return data[i];
     }
 
-    public float[] GetColumn(int j)
+    public double[] GetColumn(int j)
     {
-        float[] columnData = new float[this.data.length];
+        double[] columnData = new double[this.data.length];
         for (int i = 0; i < this.data.length; i++)
         {
             columnData[i] = this.data[i][j];
@@ -188,12 +188,12 @@ public class Matrix implements Cloneable
         return columnData;
     }
 
-    public void SetRow(int i, float[] rowData)
+    public void SetRow(int i, double[] rowData)
     {
         data[i] = rowData.clone();
     }
 
-    public void SetColumn(int j, float[] columnData)
+    public void SetColumn(int j, double[] columnData)
     {
         for (int i = 0; i < this.data.length; i++)
         {
@@ -215,7 +215,7 @@ public class Matrix implements Cloneable
 
     public Matrix(int nRows, int nColumns)
     {
-        this.data = new float[nRows][nColumns];
+        this.data = new double[nRows][nColumns];
         for (int i = 0; i < nRows; i++)
         {
             for (int j = 0; j < nColumns; j++)
@@ -225,14 +225,14 @@ public class Matrix implements Cloneable
         }
     }
 
-    public Matrix(float[][] data)
+    public Matrix(double[][] data)
     {
         this.data = data.clone();
     }
 
     public Object clone()
     {
-        float[][] copiedData = new float[data.length][data[0].length];
+        double[][] copiedData = new double[data.length][data[0].length];
         for (int i = 0; i < data.length; i++)
         {
             for (int j = 0; j < data[i].length; j++)
@@ -244,5 +244,5 @@ public class Matrix implements Cloneable
         return new Matrix(copiedData);
     }
 
-    private float[][] data;
+    private double[][] data;
 }

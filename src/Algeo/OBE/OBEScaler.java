@@ -4,7 +4,7 @@ import Algeo.Matrix;
 
 public class OBEScaler
 {
-    static public Matrix Scale(Matrix m, int row, float scale)
+    static public Matrix Scale(Matrix m, int row, double scale)
     {
         Matrix scaledMatrix = (Matrix) m.clone();
 

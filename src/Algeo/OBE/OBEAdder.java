@@ -4,7 +4,7 @@ import Algeo.Matrix;
 
 public class OBEAdder
 {
-    static public Matrix Add(Matrix m, int targetRow, int sourceRow, float scale)
+    static public Matrix Add(Matrix m, int targetRow, int sourceRow, double scale)
     {
         Matrix newMatrix = new Matrix(m.GetRowCount(), m.GetColumnCount());
 
@@ -12,7 +12,7 @@ public class OBEAdder
         {
             if (i == targetRow)
             {
-                float[] newRowData = m.GetRow(sourceRow).clone();
+                double[] newRowData = m.GetRow(sourceRow).clone();
 
                 for (int j = 0; j < newRowData.length; j++)
                 {

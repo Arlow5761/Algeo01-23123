@@ -10,10 +10,10 @@ public class CramerSolver
         return new Matrix[0];
     }
     
-    static public float[] Solve(Matrix equationSpace, Matrix solutionSpace)
+    static public double[] Solve(Matrix equationSpace, Matrix solutionSpace)
     {
-        float[] result = new float[equationSpace.GetColumnCount()];
-        float detM = DeterminantCofactorSolver.determinant(equationSpace);
+        double[] result = new double[equationSpace.GetColumnCount()];
+        double detM = DeterminantCofactorSolver.determinant(equationSpace);
         for (int i=0;i<solutionSpace.GetRowCount();i++) {
             result[i] = DeterminantCofactorSolver.determinant(sliceAndInsert(equationSpace,solutionSpace,i))/detM;
         }

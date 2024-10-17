@@ -40,7 +40,7 @@ public class GaussSolver {
             }
 
             // Scale
-            float leadVal = matrix.Get(r, lead);
+            double leadVal = matrix.Get(r, lead);
             if (Math.abs(leadVal - 1.0f) > 1e-8) {
                 matrix = OBEScaler.Scale(matrix, r, 1.0f / leadVal);
             }
@@ -48,7 +48,7 @@ public class GaussSolver {
             // Add
             for (int j = 0; j < n; j++) {
                 if (j != r) {
-                    float factor = -matrix.Get(j, lead);
+                    double factor = -matrix.Get(j, lead);
                     if (Math.abs(factor) > 1e-8) {
                         matrix = OBEAdder.Add(matrix, j, r, factor);
                     }
@@ -60,17 +60,17 @@ public class GaussSolver {
         return this;
     }
 
-    public float[] GetSingleSolution() {
+    public double[] GetSingleSolution() {
         int n = matrix.GetRowCount();
         int m = matrix.GetColumnCount();
-        float[] solutions = new float[m - 1];
+        double[] solutions = new double[m - 1];
 
         for (int i = 0; i < n; i++) {
             boolean allZeros = true;
             int pivotCol = -1;
 
             for (int j = 0; j < m - 1; j++) {
-                float val = matrix.Get(i, j);
+                double val = matrix.Get(i, j);
                 if (Math.abs(val) > 1e-8) {
                     allZeros = false;
                     if (pivotCol == -1) {

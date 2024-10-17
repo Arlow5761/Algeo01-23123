@@ -10,7 +10,7 @@ public class InverseNormalSolver
     {
         if (m.GetRowCount() != m.GetColumnCount()) return null;
 
-        float determinant = DeterminantCofactorSolver.determinant(m);
+        double determinant = DeterminantCofactorSolver.determinant(m);
 
         if (determinant == 0) return null;
 
