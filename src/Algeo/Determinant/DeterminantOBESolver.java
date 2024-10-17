@@ -53,7 +53,7 @@ public class DeterminantOBESolver
                     
                     if (matrix.Get(i, j) != 1)
                     {
-                        multiplier *= 1/matrix.Get(i, j);
+                        multiplier *= matrix.Get(i, j);
                         matrix = OBEScaler.Scale(matrix, leadOneRow, 1/matrix.Get(i, j));
                     }
 
