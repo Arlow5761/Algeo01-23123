@@ -47,6 +47,7 @@ public class PrettyTable extends JScrollPane
                     newFields[i][j].setHorizontalAlignment(JFormattedTextField.CENTER);
                     newFields[i][j].setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
                     newFields[i][j].setEditable(enabled);
+                    newFields[i][j].setValue(0);
                     gbc.gridy = i;
                     gbc.gridx = j;
                     tableArea.add(newFields[i][j], gbc);
@@ -121,6 +122,7 @@ public class PrettyTable extends JScrollPane
                     newFields[i][j].setHorizontalAlignment(JFormattedTextField.CENTER);
                     newFields[i][j].setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
                     newFields[i][j].setEditable(enabled);
+                    newFields[i][j].setValue(0);
                     gbc.gridy = i;
                     gbc.gridx = j;
                     tableArea.add(newFields[i][j], gbc);
