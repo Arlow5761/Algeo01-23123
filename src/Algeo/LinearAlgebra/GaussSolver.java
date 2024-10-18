@@ -24,7 +24,7 @@ public class GaussSolver {
                 break;
             }
             int i = r;
-            while (Math.abs(matrix.Get(i, lead)) < 1e-8) {
+            while (matrix.Get(i, lead) == 0) {
                 i++;
                 if (i == n) {
                     i = r;
@@ -35,21 +35,21 @@ public class GaussSolver {
                 }
             }
             if (i != r) {
-                //switch
+                // Switch
                 matrix = OBESwitcher.Switch(matrix, i, r);
             }
 
             // Scale
             double leadVal = matrix.Get(r, lead);
-            if (Math.abs(leadVal - 1.0f) > 1e-8) {
-                matrix = OBEScaler.Scale(matrix, r, 1.0f / leadVal);
+            if (leadVal != 1.0) {
+                matrix = OBEScaler.Scale(matrix, r, 1.0 / leadVal);
             }
 
             // Add
             for (int j = 0; j < n; j++) {
                 if (j != r) {
                     double factor = -matrix.Get(j, lead);
-                    if (Math.abs(factor) > 1e-8) {
+                    if (factor != 0) {
                         matrix = OBEAdder.Add(matrix, j, r, factor);
                     }
                 }
@@ -71,7 +71,7 @@ public class GaussSolver {
 
             for (int j = 0; j < m - 1; j++) {
                 double val = matrix.Get(i, j);
-                if (Math.abs(val) > 1e-8) {
+                if (val != 0) {
                     allZeros = false;
                     if (pivotCol == -1) {
                         pivotCol = j;
