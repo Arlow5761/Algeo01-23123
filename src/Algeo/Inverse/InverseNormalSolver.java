@@ -2,7 +2,6 @@ package Algeo.Inverse;
 
 import Algeo.Matrix;
 import Algeo.Determinant.DeterminantCofactorSolver;
-import Algeo.Determinant.DeterminantOBESolver;
 
 public class InverseNormalSolver
 {

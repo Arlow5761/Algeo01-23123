@@ -34,7 +34,5 @@ public class InverseOBESolver
         matrix = (Matrix) m.clone();
     }
 
-    private boolean solved;
-
     private Matrix matrix;
 }
