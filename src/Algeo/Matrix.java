@@ -211,6 +211,17 @@ public class Matrix implements Cloneable
         return this.data[0].length;
     }
 
+    public int size()
+    {
+        int count = 0;
+        for( int i = 0 ; i < this.GetRowCount(); i++){
+            for (int j = 0 ; j < this.GetColumnCount(); j++){
+                count++;
+            }
+        }
+        return count;
+    }
+
     // CONSTRUCTORS DESTRUCTORS //
 
     public Matrix(int nRows, int nColumns)
