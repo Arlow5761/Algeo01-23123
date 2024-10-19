@@ -21,24 +21,6 @@ public class BicubicSplineInterpolator
         System.out.println(bicubic_interpolate(mew_maxing, a, b));
     }
 
-    //Augmented Matrix
-    private static Matrix augmentMatrices(Matrix A, Matrix b) {
-        int rows = A.GetRowCount();
-        int colsA = A.GetColumnCount();
-
-        Matrix augmented = new Matrix(rows, colsA + 1);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < colsA; j++) {
-                augmented.Set(i, j, A.Get(i, j));
-            }
-            augmented.Set(i, colsA, b.Get(i, 0));
-        }
-
-        return augmented;
-    }
-
-
     public static double bicubic_interpolate(Matrix m , double a, double b){
 
         //input matrix 16x1
@@ -68,7 +50,7 @@ public class BicubicSplineInterpolator
         Matrix element = new Matrix(template);
         
         //augment both matrix
-        Matrix augmented = augmentMatrices(element,function);
+        Matrix augmented = Matrix.Append(element, function);
 
         //solve gaussjordan
         GaussJordanSolver solver = new GaussJordanSolver(augmented);
