@@ -12,6 +12,11 @@ public class GaussSolver {
         matrix = (Matrix) m.clone();
     }
 
+    static public GaussSolver Solve(Matrix m)
+    {
+        return new GaussSolver(m).Solve();
+    }
+
     public GaussSolver Solve() {
         int leadOneRow = 0;
         int leadOneCol = 0;
