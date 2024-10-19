@@ -30,7 +30,7 @@ public class PolynomialInterpolator {
             }
         }
 
-        Matrix augmentedMatrix = augmentMatrices(A, b);
+        Matrix augmentedMatrix = Matrix.Append(A, b);
 
         // Eleminasi Gauss
         GaussSolver solver = new GaussSolver(augmentedMatrix);
@@ -48,22 +48,5 @@ public class PolynomialInterpolator {
         }
 
         return y;
-    }
-
-    //Augmented Matrix
-    private static Matrix augmentMatrices(Matrix A, Matrix b) {
-        int rows = A.GetRowCount();
-        int colsA = A.GetColumnCount();
-
-        Matrix augmented = new Matrix(rows, colsA + 1);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < colsA; j++) {
-                augmented.Set(i, j, A.Get(i, j));
-            }
-            augmented.Set(i, colsA, b.Get(i, 0));
-        }
-
-        return augmented;//gabung matrix a & matrix b
     }
 }
