@@ -1,7 +1,5 @@
 package Algeo.LinearAlgebra;
 
-import java.util.Arrays;
-
 import Algeo.Matrix;
 import Algeo.OBE.OBEScaler;
 import Algeo.OBE.OBESwitcher;
@@ -18,46 +16,40 @@ public class GaussSolver {
         int leadOneRow = 0;
         int leadOneCol = 0;
 
-        for (int j = 0; (j < matrix.GetColumnCount()) && (leadOneCol < matrix.GetColumnCount()) && (leadOneRow < matrix.GetRowCount()); j++)
-        {
+        for (int j = 0; (j < matrix.GetColumnCount()) && (leadOneCol < matrix.GetColumnCount()) && (leadOneRow < matrix.GetRowCount()); j++) {
             boolean zeroCol = false;
 
-            for (int i = 0; (i < matrix.GetRowCount()) && !zeroCol; i++)
-            {
+            for (int i = 0; (i < matrix.GetRowCount()) && !zeroCol; i++) {
 
-                if ((i == leadOneRow) && (j == leadOneCol))
-                {
-                    if (matrix.Get(i, j) == 0)
-                    {
+                if ((i == leadOneRow) && (j == leadOneCol)) {
+                    if (Math.abs(matrix.Get(i, j)) <= 1e-8) {
                         zeroCol = true;
 
-                        for (int k = i + 1; k < matrix.GetRowCount(); k++)
-                        {
-                            if (matrix.Get(k, j) == 0) continue;
+                        for (int k = i + 1; k < matrix.GetRowCount(); k++) {
+                            if (Math.abs(matrix.Get(k, j)) <= 1e-8) continue;
                             
                             matrix = OBESwitcher.Switch(matrix, leadOneRow, k);
                             zeroCol = false;
                             break;
                         }
 
-                        if (zeroCol)
-                        {
+                        if (zeroCol) {
                             leadOneCol++;
                             continue;
                         }
                     }
                     
-                    if (matrix.Get(i, j) != 1)
-                    {
+                    if (Math.abs(matrix.Get(i, j) - 1) > 1e-8) {
                         matrix = OBEScaler.Scale(matrix, leadOneRow, 1/matrix.Get(i, j));
+                        matrix.Set(i, j, 1);
                     }
 
                     leadOneRow++;
                     leadOneCol++;
                 }
-                else if ((i >= leadOneRow) && (matrix.Get(i, j) != 0))
-                {
+                else if ((i >= leadOneRow) && (Math.abs(matrix.Get(i, j)) > 1e-8)) {
                     matrix = OBEAdder.Add(matrix, i, leadOneRow - 1, -matrix.Get(i, j));
+                    matrix.Set(i, j, 0);
                 }
             }
         }
