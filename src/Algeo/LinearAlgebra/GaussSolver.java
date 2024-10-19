@@ -5,91 +5,121 @@ import Algeo.OBE.OBEScaler;
 import Algeo.OBE.OBESwitcher;
 import Algeo.OBE.OBEAdder;
 
-public class GaussSolver {
-
-    private Matrix matrix;
-
-    public GaussSolver(Matrix m) {
-        matrix = (Matrix) m.clone();
+public class GaussSolver
+{
+    static public GaussSolver Solve(Matrix m)
+    {
+        return new GaussSolver(m).Solve();
     }
 
-    public GaussSolver Solve() {
-        int n = matrix.GetRowCount();
-        int m = matrix.GetColumnCount();
+    public GaussSolver Solve()
+    {
+        // OBE operations
 
-        int lead = 0;
+        int leadOneRow = 0;
+        int leadOneCol = 0;
+        for (int j = 0; (j < matrix.GetColumnCount()) && (leadOneCol < matrix.GetColumnCount()) && (leadOneRow < matrix.GetRowCount()); j++)
+        {
+            boolean zeroCol = false;
 
-        for (int r = 0; r < n; r++) {
-            if (lead >= m) {
-                break;
+            for (int i = 0; (i < matrix.GetRowCount()) && !zeroCol; i++)
+            {
+
+                if ((i == leadOneRow) && (j == leadOneCol))
+                {
+                    if (matrix.Get(i, j) == 0)
+                    {
+                        zeroCol = true;
+
+                        for (int k = i + 1; k < matrix.GetRowCount(); k++)
+                        {
+                            if (matrix.Get(k, j) == 0) continue;
+                            
+                            matrix = OBESwitcher.Switch(matrix, leadOneRow, k);
+                            zeroCol = false;
+                            break;
+                        }
+
+                        if (zeroCol)
+                        {
+                            leadOneCol++;
+                            continue;
+                        }
+                    }
+                    
+                    if (matrix.Get(i, j) != 1)
+                    {
+                        matrix = OBEScaler.Scale(matrix, leadOneRow, 1/matrix.Get(i, j));
+                    }
+
+                    leadOneRow++;
+                    leadOneCol++;
+                }
+                else if ((i >= leadOneRow) && (matrix.Get(i, j) != 0))
+                {
+                    matrix = OBEAdder.Add(matrix, i, leadOneRow - 1, -matrix.Get(i, j));
+                }
             }
-            int i = r;
-            while (matrix.Get(i, lead) == 0) {
-                i++;
-                if (i == n) {
-                    i = r;
-                    lead++;
-                    if (lead == m) {
-                        return this;
+        }
+
+        // Backwards Substitution
+
+        for (int i = 0; i < equalities.length; i++)
+        {
+            int mainVarPos = -1;
+
+            for (int j = 0; j < equalities[i].length; j++)
+            {
+                equalities[i][j] = matrix.Get(i, j);
+
+                if ((equalities[i][j] == 1) && (mainVarPos == -1))
+                {
+                    mainVarPos = j;
+                }
+                else if ((mainVarPos != -1) && (i > 0))
+                {
+                    int k = i;
+
+                    for (; (k >= 0) && (equalities[k][j] == 0); k--);
+
+                    for (int l = j; l < equalities[i].length; l++)
+                    {
+                        equalities[i][l] -= equalities[i][j] * equalities[k][l];
                     }
                 }
             }
-            if (i != r) {
-                // Switch
-                matrix = OBESwitcher.Switch(matrix, i, r);
-            }
-
-            // Scale
-            double leadVal = matrix.Get(r, lead);
-            if (leadVal != 1.0) {
-                matrix = OBEScaler.Scale(matrix, r, 1.0 / leadVal);
-            }
-
-            // Add
-            for (int j = 0; j < n; j++) {
-                if (j != r) {
-                    double factor = -matrix.Get(j, lead);
-                    if (factor != 0) {
-                        matrix = OBEAdder.Add(matrix, j, r, factor);
-                    }
-                }
-            }
-            lead++;
         }
 
         return this;
     }
 
-    public double[] GetSingleSolution() {
-        int n = matrix.GetRowCount();
-        int m = matrix.GetColumnCount();
-        double[] solutions = new double[m - 1];
+    public Matrix GetMatrix()
+    {
+        return matrix;
+    }
 
-        for (int i = 0; i < n; i++) {
-            boolean allZeros = true;
-            int pivotCol = -1;
+    public double[][] GetSolution()
+    {
+        return equalities;
+    }
 
-            for (int j = 0; j < m - 1; j++) {
-                double val = matrix.Get(i, j);
-                if (val != 0) {
-                    allZeros = false;
-                    if (pivotCol == -1) {
-                        pivotCol = j;
-                    } else {
-                        return null;
-                    }
-                }
-            }
+    public double[] GetSingleSolution()
+    {
+        double[] solutions = new double[matrix.GetRowCount()];
 
-            if (!allZeros) {
-                solutions[pivotCol] = matrix.Get(i, m - 1);
-            }
+        for (int i = 0; i < matrix.GetRowCount(); i++) {
+            solutions[i] = matrix.Get(i, matrix.GetColumnCount() - 1);
         }
 
         return solutions;
     }
 
-    public Matrix GetMatrix() {
-        return matrix;
+    public GaussSolver(Matrix m)
+    {
+        equalities = new double[m.GetRowCount()][m.GetColumnCount()];
+        matrix = (Matrix) m.clone();
     }
+
+    private Matrix matrix;
+    private double[][] equalities;
 }
