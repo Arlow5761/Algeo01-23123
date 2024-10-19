@@ -8,23 +8,29 @@ public class BicubicSplineInterpolator
 
     public static void main(String args[]){
         double a, b;
-        a = 0.5;
-        b = 0.5;
-        double[][] skibidi = {
-            {1}, {2}, {3}, {4},
-            {5}, {6}, {7}, {8},
-            {9}, {10}, {11}, {12},
-            {13}, {14}, {15}, {16}
+        a = 0.75;
+        b = 0.25;
+        double[][] skibidi1 = {
+            {21,98,125,153},
+            {51,101,161,59},
+            {0,42,72,210},
+            {16,12,81,96},
         };
-        
-        Matrix mew_maxing = new Matrix(skibidi);
+    
+        Matrix mew_maxing = new Matrix(skibidi1);
         System.out.println(bicubic_interpolate(mew_maxing, a, b));
     }
 
     public static double bicubic_interpolate(Matrix m , double a, double b){
 
-        //input matrix 16x1
-        Matrix function = m;
+        //convert matrix 16x1
+        Matrix function = new Matrix(m.size(), 1); 
+        for ( int i = 0 ; i < m.GetRowCount(); i++){
+            for ( int j = 0 ; j < m.GetColumnCount(); j++){
+                function.Set((4 * i) + j, 0, m.Get(i,j));
+            }
+        }
+
 
         //input element value in matrix
         double[][] template ={
