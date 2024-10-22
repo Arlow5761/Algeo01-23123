@@ -10,10 +10,10 @@ public class MenuPage extends Page
         page.setLayout(null);
 
         title = new JLabel("Table of Contents", JLabel.CENTER);
-        title.setFont(new Font("Comic Sans MS", Font.PLAIN, 48));
+        title.setFont(FontManager.GetMeanwhile(48));
         title.setBounds(0, 200, 700, 50);
 
-        Font font = new Font("Comic Sans MS", Font.PLAIN, 18);
+        Font font = FontManager.GetMeanwhile(18);
 
         spl = new JButton("Linear System of Equations");
         spl.setFont(font);
@@ -33,7 +33,7 @@ public class MenuPage extends Page
         inverse.setContentAreaFilled(false);
         inverse.setBorderPainted(false);
 
-        interpolation = new JButton("Interpolation of Points in 2D & 3D space");
+        interpolation = new JButton("Interpolation of Points in 2D - 3D space");
         interpolation.setFont(font);
         interpolation.setBounds(0, 470, 700, 50);
         interpolation.setContentAreaFilled(false);
