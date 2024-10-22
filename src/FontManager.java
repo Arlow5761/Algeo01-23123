@@ -3,7 +3,7 @@ import java.io.File;
 
 public class FontManager
 {
-    public Font GetMeanwhile(float size)
+    static public Font GetMeanwhile(float size)
     {
         if (meanwhile == null)
         {
@@ -13,7 +13,7 @@ public class FontManager
         return meanwhile.deriveFont(size);
     }
 
-    private void SetMeanwhileFont()
+    static private void SetMeanwhileFont()
     {
         File fontFile = new File("../assets/NDAUMO-CCMeanwhile.ttf");
         try
@@ -26,5 +26,5 @@ public class FontManager
         }
     }
 
-    private Font meanwhile;    
+    static private Font meanwhile;    
 }
