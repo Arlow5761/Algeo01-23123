@@ -61,8 +61,10 @@ After running the application, you'll have access to the following functionaliti
 
 - **Java Swing**: For creating the graphical user interface (GUI).
 
-## ANIME WAIFUS (Art Credits)
+## Credits
 
-- **Linear Algebra Manga** : The Manga Guide to Linear Algebra by Shin Takahashi and friends.
+- **GUI** : The Manga Guide to Linear Algebra by Shin Takahashi. [(buy here)](https://www.deviantart.com/serenext/art/FURINA-Genshin-Impact-Render-992975495)
 
   ![My Wife](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/880ec08f-af7c-4f1e-a912-afbc13de787d/dgf6wsn-d8a8fb1f-a4a2-4156-9969-4bce19c015e2.png/v1/fill/w_935,h_854/furina___genshin_impact_render_by_serenext_dgf6wsn-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTE2OSIsInBhdGgiOiJcL2ZcLzg4MGVjMDhmLWFmN2MtNGYxZS1hOTEyLWFmYmMxM2RlNzg3ZFwvZGdmNndzbi1kOGE4ZmIxZi1hNGEyLTQxNTYtOTk2OS00YmNlMTljMDE1ZTIucG5nIiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.SmXQHSnh8ILH6QDKnF3_qlIRMxwftF0ooLEGrVg2tUg)
+
+- **Image Above** : [DeviantArt | Serenext](https://www.deviantart.com/serenext/art/FURINA-Genshin-Impact-Render-992975495)
