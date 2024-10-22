@@ -69,7 +69,7 @@ public class LinearAlgebraCalculator implements ActionListener
         else if (e.getSource() == quadratic)
         {
             currentPage.Unload();
-            Page.Load(new InterpolationBicubicSplinePage());
+            Page.Load(new RegressionQuadraticPage());
         }
         else if (e.getSource() == linear)
         {
@@ -79,7 +79,7 @@ public class LinearAlgebraCalculator implements ActionListener
         else if (e.getSource() == bicubic)
         {
             currentPage.Unload();
-            Page.Load(new RegressionQuadraticPage());
+            Page.Load(new InterpolationBicubicSplinePage());
         }
     }
 
