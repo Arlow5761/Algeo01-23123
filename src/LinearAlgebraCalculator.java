@@ -85,6 +85,15 @@ public class LinearAlgebraCalculator implements ActionListener
 
     public LinearAlgebraCalculator()
     {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception e)
+        {
+            System.out.println("Look and feel not applied due to error.");
+        }
+
         window = new JFrame("Linear Algebra Calculator");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
