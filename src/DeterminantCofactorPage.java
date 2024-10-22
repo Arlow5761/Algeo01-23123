@@ -92,8 +92,26 @@ public class DeterminantCofactorPage extends Page
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+                Matrix importedMatrix = MatrixIO.OpenMatrix();
+
+                if (importedMatrix == null)
+                {
+                    JOptionPane.showMessageDialog(null, "Error : Import Failed!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (importedMatrix.GetColumnCount() != importedMatrix.GetRowCount())
+                {
+                    JOptionPane.showMessageDialog(null, "Error : Matrix not square!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                sizeField.setValue(importedMatrix.GetRowCount());
+
+                MatrixIO.ImportToTable(matrixInput, importedMatrix);
+
+                page.revalidate();
+                page.repaint();
             }
         });
 
@@ -102,8 +120,17 @@ public class DeterminantCofactorPage extends Page
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+                Matrix matrix = MatrixIO.ExtractFromTable(matrixInput);
+
+                double det = DeterminantCofactorSolver.determinant(matrix);
+
+                NumberFormat printFormat = NumberFormat.getNumberInstance();
+                printFormat.setMaximumFractionDigits(4);
+
+                answerLabel.setText(printFormat.format(det));
+
+                page.revalidate();
+                page.repaint();
             }
         });
     }
