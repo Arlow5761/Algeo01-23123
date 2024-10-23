@@ -1,5 +1,3 @@
-import java.text.*;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -10,7 +8,6 @@ import javax.swing.event.*;
 
 import Algeo.Matrix;
 import Algeo.Determinant.DeterminantOBESolver;
-import Algeo.LinearAlgebra.GaussSolver;
 import Algeo.LinearAlgebra.InverseSolver;
 
 public class SPLInversePage extends Page
