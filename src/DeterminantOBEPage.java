@@ -1,10 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.*;
 import javax.swing.*;
+import javax.swing.JSpinner.NumberEditor;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.text.NumberFormatter;
+
 import java.text.*;
 import Algeo.*;
-import Algeo.Determinant.DeterminantCofactorSolver;
 import Algeo.Determinant.DeterminantOBESolver;
 
 public class DeterminantOBEPage extends Page
@@ -24,9 +27,12 @@ public class DeterminantOBEPage extends Page
         sizeLabel.setFont(FontManager.GetMeanwhile(14));
         sizeLabel.setBounds(80, 475, 50, 30);
 
-        JFormattedTextField sizeField = new JFormattedTextField(NumberFormat.getIntegerInstance());
-        sizeField.setValue(3);
+        JSpinner sizeField = new JSpinner(new SpinnerNumberModel(3, 1, 100, 1));
         sizeField.setBounds(150, 475, 80, 30);
+        sizeField.setFont(FontManager.GetMeanwhile(12));
+
+        NumberEditor numberEditor = new JSpinner.NumberEditor(sizeField);
+        ((NumberFormatter) numberEditor.getTextField().getFormatter()).setAllowsInvalid(false);
 
         PrettyButton importButton = new PrettyButton("Import");
         importButton.setBounds(542, 715, 100, 30);
@@ -73,10 +79,10 @@ public class DeterminantOBEPage extends Page
         page.revalidate();
         page.repaint();
 
-        sizeField.addActionListener(new ActionListener()
+        sizeField.addChangeListener(new ChangeListener()
         {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void stateChanged(ChangeEvent e) {
                 int size = ((Number) sizeField.getValue()).intValue();
 
                 matrixInput.SetCols(size);
