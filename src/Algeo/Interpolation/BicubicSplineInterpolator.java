@@ -1,28 +1,21 @@
 package Algeo.Interpolation;
 
 import Algeo.LinearAlgebra.GaussJordanSolver;
-import Algeo.Matrix; 
+import Algeo.Matrix;
 
-public class BicubicSplineInterpolator
-{
+public class BicubicSplineInterpolator {
 
     public static void main(String args[]){
-        double a, b;
-        a = 0.75;
-        b = 0.25;
-        double[][] skibidi1 = {
-            {21,98,125,153},
-            {51,101,161,59},
-            {0,42,72,210},
-            {16,12,81,96},
-        };
-    
-        Matrix mew_maxing = new Matrix(skibidi1);
-        System.out.println(bicubic_interpolate(mew_maxing, a, b));
+        double a = 0.5;
+        double b = 0.5;
+
+        double[][] mewing = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+        System.out.println(bicubicInterpolate(mewing,a , b));
+
         int n = 20;
 		for (int i = 0; i <= n ; i++) {
 			for (int j = 0; j <= n ; j++) {
-				double result = bicubic_interpolate(mew_maxing, (double)i/n , (double)j/n);
+				double result = bicubicInterpolate(mewing, (double)i/n,(double) j/n);
 				System.out.printf("%.0f ",result);
 			}
 			System.out.println("");
@@ -30,81 +23,93 @@ public class BicubicSplineInterpolator
 
     }
 
-    public static double bicubic_interpolate(Matrix m , double a, double b){
+    public static double bicubicInterpolate(double[][] input, double a, double b) {
+        // handle error
+        if (input.length != 4 || input[0].length != 4) {
+            throw new IllegalArgumentException("Input matrix tidak valid");
+        }
 
-        //convert matrix 16x1
-        Matrix function = new Matrix(m.size(), 1); 
-        for ( int i = 0 ; i < m.GetRowCount(); i++){
-            for ( int j = 0 ; j < m.GetColumnCount(); j++){
-                function.Set((4 * i) + j, 0, m.Get(i,j));
+        //input
+        double[] F = new double[16];
+        int idx = 0;
+        for (int k = 0; k < 4; k++) {
+            for (int l = 0; l < 4; l++) {
+                F[idx++] = input[k][l];
             }
         }
 
-        //matrix equation
-        double[][] equation = new double[16][16];
+        double[][] A = new double[16][16];
+        double[] bVec = new double[16];
 
-        for (int k = 0; k < 16; k++) {
-            int pointIndex = k % 4;
-            int derivativeIndex = k / 4;
+        idx = 0;
+        double[] xCoords = {0, 1};
+        double[] yCoords = {0, 1};
 
-            int x = (pointIndex == 0 || pointIndex == 2) ? 0 : 1;
-            int y = (pointIndex == 0 || pointIndex == 1) ? 0 : 1;
+        for (int i = 0; i < 2; i++) { 
+            for (int j = 0; j < 2; j++) { 
+                double xi = xCoords[i];
+                double yj = yCoords[j];
 
-            switch (derivativeIndex) {
-
-                case 0: // f(x,y)
-                    for (int i = 0; i <= 3; i++) {
-                        for (int j = 0; j <= 3; j++) {
-                            equation[k][4 * i + j] = Math.pow(x, i) * Math.pow(y, j);
-                        }
+                // proses
+                double[] basisF = new double[16];
+                double[] basisFx = new double[16];
+                double[] basisFy = new double[16];
+                double[] basisFxy = new double[16];
+                int count = 0;
+                for (int m = 0; m < 4; m++) {
+                    for (int n = 0; n < 4; n++) {
+                        double xm = Math.pow(xi, m);
+                        double yn = Math.pow(yj, n);
+                        basisF[count] = xm * yn;
+                        basisFx[count] = (m > 0 ? m * Math.pow(xi, m - 1) : 0) * yn;
+                        basisFy[count] = xm * (n > 0 ? n * Math.pow(yj, n - 1) : 0);
+                        basisFxy[count] = (m > 0 ? m * Math.pow(xi, m - 1) : 0) * (n > 0 ? n * Math.pow(yj, n - 1) : 0);
+                        count++;
                     }
-                    break;
+                }
 
-                case 1: // fx(x,y)
-                    for (int i = 1; i <= 3; i++) {
-                        for (int j = 0; j <= 3; j++) {
-                            equation[k][4 * i + j] = i * Math.pow(x, i - 1) * Math.pow(y, j);
-                        }
-                    }
-                    break;
+                // f(xi, yj)
+                A[idx] = basisF;
+                bVec[idx] = F[idx];
+                idx++;
 
-                case 2: // fy(x,y)
-                    for (int i = 0; i <= 3; i++) {
-                        for (int j = 1; j <= 3; j++) {
-                            equation[k][4 * i + j] = j * Math.pow(x, i) * Math.pow(y, j - 1);
-                        }
-                    }
-                    break;
+                // fx(xi, yj)
+                A[idx] = basisFx;
+                bVec[idx] = F[idx];
+                idx++;
 
-                case 3: // fxy(x,y)
-                    for (int i = 1; i <= 3; i++) {
-                        for (int j = 1; j <= 3; j++) {
-                            equation[k][4 * i + j] = i * j * Math.pow(x, i - 1) * Math.pow(y, j - 1);
-                        }
-                    }
-                    break;
+                // fy(xi, yj)
+                A[idx] = basisFy;
+                bVec[idx] = F[idx];
+                idx++;
 
+                // fxy(xi, yj)
+                A[idx] = basisFxy;
+                bVec[idx] = F[idx];
+                idx++;
             }
         }
 
-        //to matrix
-        Matrix element = new Matrix(equation);
+        // Solve 
+        Matrix AMatrix = new Matrix(A);
+        Matrix bMatrix = new Matrix(bVec.length, 1);
+        for (int i = 0; i < bVec.length; i++) {
+            bMatrix.Set(i, 0, bVec[i]);
+        }
+        Matrix augmented = Matrix.Append(AMatrix, bMatrix);
 
-        
-        //augment both matrix
-        Matrix augmented = Matrix.Append(element, function);
-
-        //solve gaussjordan
         GaussJordanSolver solver = new GaussJordanSolver(augmented);
         solver.Solve();
         double[] coeffs = solver.GetSingleSolution();
-          
-        //solve final
+
+        //result
         double result = 0.0;
-        for (int i = 0; i <= 3; i++) {
-            for (int j = 0; j <= 3; j++) {
-                int index = i * 4 + j; 
-                result += coeffs[index] * Math.pow(a, i) * Math.pow(b, j);
+        int count = 0;
+        for (int m = 0; m < 4; m++) {
+            double am = Math.pow(a, m);
+            for (int n = 0; n < 4; n++) {
+                double bn = Math.pow(b, n);
+                result += coeffs[count++] * am * bn;
             }
         }
 
