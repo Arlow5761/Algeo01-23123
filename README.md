@@ -36,7 +36,8 @@ This project is a **Linear Algebra Calculator** implemented using Java's Swing l
     or download the ZIP and extract it.
 
 2. **Compile and run the application**:
-    For Windows users, you can use the provided batch scripts:
+
+   For Windows users, you can use the provided batch scripts:
     - First, build the project by running:
 
         ```bash
@@ -47,6 +48,17 @@ This project is a **Linear Algebra Calculator** implemented using Java's Swing l
 
         ```bash
         windows_run.bat
+        ```
+
+   For other OS:
+    - First, open terminal and copy:
+        ```bash/terminal
+        javac -sourcepath ./src/ -d ./bin/ ./src/LinearAlgebraCalculator.java
+        ```
+    
+    - Then, copy and run:
+        ```bash/terminal
+        java bin/LinearAlgbraCalculator
         ```
 
 ## Usage
