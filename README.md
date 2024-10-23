@@ -16,7 +16,7 @@ This project is a **Linear Algebra Calculator** implemented using Java's Swing l
     - Solving linear equations using Gaussian and Gauss-Jordan elimination
 - **Interpolation**:
     - Polynomial interpolation
-    - Bicubic spline interpolation (useful for smooth curve fitting)
+    - Bicubic spline interpolation
     - Image resizing based on bicubic spline interpolation
 - **Other Operations**:
     - Regression analysis
