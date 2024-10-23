@@ -209,6 +209,20 @@ public class PrettyTable extends JScrollPane
         }
     }
 
+    public void SetLabelsVisible(boolean visible)
+    {
+        if (visible)
+        {
+            super.setRowHeaderView(null);
+            super.setColumnHeaderView(null);
+        }
+        else
+        {
+            super.setRowHeaderView(rowHeader);
+            super.setColumnHeaderView(columnHeader);
+        }
+    }
+
     public void SetEditable(boolean editable)
     {
         enabled = editable;
