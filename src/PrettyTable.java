@@ -61,7 +61,7 @@ public class PrettyTable extends JScrollPane
 
         inputFields = newFields;
 
-        for (int i = 0; i < this.nCols; i++)
+        for (int i = 0; i < this.nCols && columnLabels != null; i++)
         {
             topLabelArea.remove(columnLabels[i]);
         }
@@ -136,7 +136,7 @@ public class PrettyTable extends JScrollPane
 
         inputFields = newFields;
 
-        for (int i = 0; i < this.nRows; i++)
+        for (int i = 0; i < this.nRows && rowLabels != null; i++)
         {
             sideLabelArea.remove(rowLabels[i]);
         }
