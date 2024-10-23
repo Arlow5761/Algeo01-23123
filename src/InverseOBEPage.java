@@ -130,6 +130,7 @@ public class InverseOBEPage extends Page
                 if (DeterminantOBESolver.Solve(input) == 0)
                 {
                     JOptionPane.showMessageDialog(null, "This matrix has no inverse!", "Operation Failed", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
 
                 Matrix result = InverseNormalSolver.Solve(input);
