@@ -1,66 +1,88 @@
+---
 
 # Linear Algebra Calculator feat. Anime Girls
 
-This project is a **Linear Algebra Calculator** implemented using Java's Swing library for GUI. It provides various matrix operations and advanced linear algebra functionalities such as Gauss elimination, interpolation, and Bicubic spline interpolation.
+This project is a **Linear Algebra Calculator** implemented using Java's Swing library for GUI. It provides various matrix operations and advanced linear algebra functionalities such as Gauss elimination, interpolation, and bicubic spline interpolation.
 
-## Contributors
+## Table of Contents
+
+- [Authors](#authors)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Credits](#credits)
+- [Contact Information](#contact-information)
+
+## Authors and Contributors
+
 1. **Arlow Emanuel Hergara** (13523161) - Lead Programmer
-2. **Brian Ricardo Tamin**   (13523126) - Report Lead Author
-3. **Rhio Bimo Prakoso S**   (13523123) - _Emotionally Damaging_
+2. **Brian Ricardo Tamin** (13523126) - Report Lead Author
+3. **Rhio Bimo Prakoso S** (13523123) - *Emotionally Damaging*
 
 ## Features
 
 - **Matrix Operations**:
-    - Determinant calculation
-    - Matrix inverse
-    - Solving linear equations using Gaussian and Gauss-Jordan elimination
+  - Determinant calculation
+  - Matrix inverse
+  - Solving linear equations using Gaussian and Gauss-Jordan elimination
 - **Interpolation**:
-    - Polynomial interpolation
-    - Bicubic spline interpolation
-    - Image resizing based on bicubic spline interpolation
-- **Other Operations**:
-    - Regression analysis
+  - Polynomial interpolation
+  - Bicubic spline interpolation
+  - Image resizing based on bicubic spline interpolation
+- **Regression Analysis**
+
+## Technologies Used
+
+- **Java Swing**: For creating the graphical user interface (GUI).
 
 ## Requirements
 
 - Java Development Kit (JDK) version 8 or higher
-- Minimal screen size of 1920 x 1080 pixels
+- Minimum screen resolution of 1920 x 1080 pixels
 
 ## Installation
 
 1. **Clone or download the repository**:
 
-    ```bash
-    git clone https://github.com/Arlow5761/Algeo01-23123.git
-    ```
+   ```bash
+   git clone https://github.com/Arlow5761/Algeo01-23123.git
+   ```
 
-    or download the ZIP and extract it.
+   Or download the ZIP file and extract it.
 
 2. **Compile and run the application**:
 
-   For Windows users, you can use the provided batch scripts:
-    - First, build the project by running:
+   - **For Windows users**:
 
-        ```bash
-        windows_build.bat
-        ```
+     - Build the project by running:
 
-    - Then, run the project using:
+       ```bash
+       windows_build.bat
+       ```
 
-        ```bash
-        windows_run.bat
-        ```
+     - Run the project using:
 
-   For other OS:
-    - First, open terminal and copy:
-        ```bash/terminal
-        javac -sourcepath ./src/ -d ./bin/ ./src/LinearAlgebraCalculator.java
-        ```
-    
-    - Then, copy and run:
-        ```bash/terminal
-        java bin/LinearAlgbraCalculator
-        ```
+       ```bash
+       windows_run.bat
+       ```
+
+   - **For other operating systems**:
+
+     - Open a terminal and compile the project:
+
+       ```bash
+       javac -sourcepath ./src/ -d ./bin/ ./src/LinearAlgebraCalculator.java
+       ```
+
+     - Run the application:
+
+       ```bash
+       java -cp ./bin/ LinearAlgebraCalculator
+       ```
 
 ## Usage
 
@@ -70,14 +92,31 @@ After running the application, you'll have access to the following functionaliti
 - **Interpolation**: Perform polynomial interpolation and bicubic spline interpolation, useful for smooth curves and resizing images.
 - **Regression**: Perform regression analysis based on matrix calculations.
 
-## Technologies Used
+## Contributing
 
-- **Java Swing**: For creating the graphical user interface (GUI).
+Contributions are welcome! Please follow these steps:
+
+1. **Fork the repository**.
+2. **Create a new branch** for your feature or bug fix.
+3. **Commit your changes** with clear and descriptive messages.
+4. **Open a pull request** detailing your changes and improvements.
+
+Please make sure your code adheres to the project's coding standards and passes all tests.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 
 ## Credits
 
-- **GUI** : The Manga Guide to Linear Algebra by Shin Takahashi. [(buy here)](https://www.amazon.com/Manga-Guide-Linear-Algebra/dp/1593274130)
+- **GUI Inspiration**: *The Manga Guide to Linear Algebra* by Shin Takahashi. [(Buy here)](https://www.amazon.com/Manga-Guide-Linear-Algebra/dp/1593274130)
 
-  ![My Wife](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/880ec08f-af7c-4f1e-a912-afbc13de787d/dgf6wsn-d8a8fb1f-a4a2-4156-9969-4bce19c015e2.png/v1/fill/w_935,h_854/furina___genshin_impact_render_by_serenext_dgf6wsn-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTE2OSIsInBhdGgiOiJcL2ZcLzg4MGVjMDhmLWFmN2MtNGYxZS1hOTEyLWFmYmMxM2RlNzg3ZFwvZGdmNndzbi1kOGE4ZmIxZi1hNGEyLTQxNTYtOTk2OS00YmNlMTljMDE1ZTIucG5nIiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.SmXQHSnh8ILH6QDKnF3_qlIRMxwftF0ooLEGrVg2tUg)
+- **Image**: [FURINA - Genshin Impact Render by Serenext](https://www.deviantart.com/serenext/art/FURINA-Genshin-Impact-Render-992975495)
 
-- **Image Above** : [DeviantArt | Serenext](https://www.deviantart.com/serenext/art/FURINA-Genshin-Impact-Render-992975495)
+## Contact Information
+
+- **Arlow Emanuel Hergara** - [Email](mailto:arlow@example.com)
+- **Brian Ricardo Tamin** - [Email](mailto:brian@example.com)
+- **Rhio Bimo Prakoso S** - [Email](mailto:rhio@example.com)
+
+---
