@@ -115,8 +115,8 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contact Information
 
-- **Arlow Emanuel Hergara** - [Email](mailto:arlow@example.com)
-- **Brian Ricardo Tamin** - [Email](mailto:brian@example.com)
-- **Rhio Bimo Prakoso S** - [Email](mailto:rhio@example.com)
+- **Arlow Emanuel Hergara** - [Email](mailto:arlow5761@gmail.com)
+- **Brian Ricardo Tamin** - [Email](mailto:brianricardotamin@gmail.com)
+- **Rhio Bimo Prakoso S** - [Email](mailto:rhiobimoprakoso.s@gmail.com)
 
 ---
