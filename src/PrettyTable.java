@@ -257,6 +257,9 @@ public class PrettyTable extends JScrollPane
         this.nCols = 0;
         this.nRows = 0;
 
+        this.cellSize = 30;
+        this.fontSize = 14;
+
         colLabelGenerator = colGenerator;
         rowLabelGenerator = rowGenerator;
 

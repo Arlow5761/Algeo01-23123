@@ -279,7 +279,7 @@ public class RegressionLinearPage extends Page
 
                 for (int i = 2; i < testPointMatrix.GetRowCount(); i++)
                 {
-                    testResultString = testResultString.concat(", ").concat(fmt.format(testPointMatrix.Get(0, i)));
+                    testResultString = testResultString.concat(", ").concat(fmt.format(testPointMatrix.Get(i, 0)));
                 }
 
                 testResultString = testResultString.concat(") = ").concat(fmt.format(testResultValue));
