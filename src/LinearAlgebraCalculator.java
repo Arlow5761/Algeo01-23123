@@ -41,10 +41,59 @@ public class LinearAlgebraCalculator implements ActionListener
             currentPage.Unload();
             Page.Load(new InverseNormalPage());
         }
+        else if (e.getSource() == gauss)
+        {
+            currentPage.Unload();
+            Page.Load(new SPLGaussPage());
+        }
+        else if (e.getSource() == gaussjordan)
+        {
+            currentPage.Unload();
+            Page.Load(new SPLGaussJordanPage());
+        }
+        else if (e.getSource() == cramer)
+        {
+            currentPage.Unload();
+            Page.Load(new SPLCramerPage());
+        }
+        else if (e.getSource() == inversem)
+        {
+            currentPage.Unload();
+            Page.Load(new SPLInversePage());
+        }
+        else if (e.getSource() == polynomial)
+        {
+            currentPage.Unload();
+            Page.Load(new InterpolationPolynomialPage());
+        }
+        else if (e.getSource() == quadratic)
+        {
+            currentPage.Unload();
+            Page.Load(new RegressionQuadraticPage());
+        }
+        else if (e.getSource() == linear)
+        {
+            currentPage.Unload();
+            Page.Load(new RegressionLinearPage());
+        }
+        else if (e.getSource() == bicubic)
+        {
+            currentPage.Unload();
+            Page.Load(new InterpolationBicubicSplinePage());
+        }
     }
 
     public LinearAlgebraCalculator()
     {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception e)
+        {
+            System.out.println("Look and feel not applied due to error.");
+        }
+
         window = new JFrame("Linear Algebra Calculator");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
@@ -56,12 +105,16 @@ public class LinearAlgebraCalculator implements ActionListener
         spl = new JMenu("Linear Systems");
 
         gauss = new JMenuItem("Gauss' Method");
+        gauss.addActionListener(this);
 
         gaussjordan = new JMenuItem("Gauss-Jordan Method");
+        gaussjordan.addActionListener(this);
 
         cramer = new JMenuItem("Cramer's Method");
+        cramer.addActionListener(this);
 
         inversem = new JMenuItem("Inverse Method");
+        inversem.addActionListener(this);
 
         spl.add(gauss);
         spl.add(gaussjordan);
@@ -93,8 +146,10 @@ public class LinearAlgebraCalculator implements ActionListener
         interpolation = new JMenu("Interpolation");
 
         polynomial = new JMenuItem("Polynomial Interpolation");
+        polynomial.addActionListener(this);
 
         bicubic = new JMenuItem("Bicubic Spline Interpolation");
+        bicubic.addActionListener(this);
 
         interpolation.add(polynomial);
         interpolation.add(bicubic);
@@ -102,8 +157,10 @@ public class LinearAlgebraCalculator implements ActionListener
         regression = new JMenu("Regression");
 
         linear = new JMenuItem("Linear Regression");
+        linear.addActionListener(this);
 
         quadratic = new JMenuItem("Quadratic Regression");
+        quadratic.addActionListener(this);
 
         regression.add(linear);
         regression.add(quadratic);

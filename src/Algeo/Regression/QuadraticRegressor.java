@@ -55,7 +55,7 @@ public class QuadraticRegressor {
         Matrix interactionTerms = new Matrix(linearTerms.GetRowCount(), (linearTerms.GetColumnCount() - 1) * linearTerms.GetColumnCount() / 2);
         int count = 0;
         for (int i = 0; i < linearTerms.GetColumnCount() - 1; i++) {
-            for (int j = 0; j < linearTerms.GetColumnCount(); j++) {
+            for (int j = i + 1; j < linearTerms.GetColumnCount(); j++) {
                 for (int r = 0; r < linearTerms.GetRowCount(); r++) {
                     interactionTerms.Set(r, count, linearTerms.Get(r, i) * linearTerms.Get(r, j));
                 }

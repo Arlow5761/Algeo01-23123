@@ -1,8 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.*;
 import javax.swing.*;
+import javax.swing.JSpinner.NumberEditor;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.text.NumberFormatter;
+
 import java.text.*;
+
 import Algeo.*;
 import Algeo.Determinant.DeterminantCofactorSolver;
 
@@ -10,126 +15,130 @@ public class DeterminantCofactorPage extends Page
 {
     public DeterminantCofactorPage()
     {
-        super();
-
         page.setLayout(null);
 
-        title = new JLabel("Determinant Calculation with Cofactors");
-        title.setBounds(0, 0, 700, 200);
-        title.setHorizontalAlignment(JLabel.CENTER);
-        title.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
+        JLabel backImage = new JLabel(new ImageIcon("../assets/determinant-cofactor.png"));
+        backImage.setBounds(0, 0, 700, 925);
 
-        page.add(title);
+        JPanel matrixArea = new JPanel(new GridBagLayout());
+        matrixArea.setBounds(200, 375, 300, 225);
+        matrixArea.setOpaque(false);
 
-        sizeLabel = new JLabel("Matrix Size:");
-        sizeLabel.setBounds(150, 200, 198, 50);
-        sizeLabel.setHorizontalAlignment(JLabel.RIGHT);
-        sizeLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+        JLabel sizeLabel = new JLabel("Size :");
+        sizeLabel.setFont(FontManager.GetMeanwhile(14));
+        sizeLabel.setBounds(80, 475, 50, 30);
 
-        page.add(sizeLabel);
+        JSpinner sizeField = new JSpinner(new SpinnerNumberModel(3, 1, 100, 1));
+        sizeField.setBounds(150, 475, 80, 30);
+        sizeField.setFont(FontManager.GetMeanwhile(12));
 
-        sizeField = new JFormattedTextField(NumberFormat.getIntegerInstance());
-        sizeField.setValue(3);
-        sizeField.setBounds(352, 200, 98, 50);
-        sizeField.setHorizontalAlignment(JFormattedTextField.LEFT);
-        sizeField.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+        NumberEditor numberEditor = new JSpinner.NumberEditor(sizeField);
+        ((NumberFormatter) numberEditor.getTextField().getFormatter()).setAllowsInvalid(false);
 
-        sizeField.addPropertyChangeListener("value", new PropertyChangeListener()
+        PrettyButton importButton = new PrettyButton("Import");
+        importButton.setBounds(542, 715, 100, 30);
+
+        PrettyButton calcButton = new PrettyButton("Calculate");
+        calcButton.setBounds(532, 802, 120, 30);
+
+        JLabel answerLabel = new JLabel();
+        answerLabel.setHorizontalAlignment(JLabel.CENTER);
+        answerLabel.setBackground(Color.blue);
+        answerLabel.setFont(FontManager.GetMeanwhile(20));
+        answerLabel.setBounds(14, 730, 200, 75);
+
+        PrettyTable matrixInput = new PrettyTable(3, 3, 
+        new LabelGenerator()
         {
             @Override
-            public void propertyChange(PropertyChangeEvent e)
+            public String GetLabel(int index)
             {
-                matrixField.SetCols(((Number) sizeField.getValue()).intValue());
-                matrixField.SetRows(((Number) sizeField.getValue()).intValue());
+                return Integer.toString(index);
+            }
+        }, 
+        new LabelGenerator()
+        {
+            @Override
+            public String GetLabel(int index)
+            {
+                return Integer.toString(index);
+            }
+        });
+        matrixInput.setMaximumSize(new Dimension(225, 225));
+
+        matrixArea.add(matrixInput);
+
+        page.add(matrixArea);
+        page.add(sizeLabel);
+        page.add(sizeField);
+        page.add(importButton);
+        page.add(calcButton);
+        page.add(answerLabel);
+
+        page.add(backImage);
+
+        page.revalidate();
+        page.repaint();
+
+        sizeField.addChangeListener(new ChangeListener()
+        {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int size = ((Number) sizeField.getValue()).intValue();
+
+                matrixInput.SetCols(size);
+                matrixInput.SetRows(size);
+
+                page.revalidate();
+                page.repaint();
+            } 
+        });
+
+        importButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Matrix importedMatrix = MatrixIO.OpenMatrix();
+
+                if (importedMatrix == null)
+                {
+                    JOptionPane.showMessageDialog(null, "Error : Import Failed!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (importedMatrix.GetColumnCount() != importedMatrix.GetRowCount())
+                {
+                    JOptionPane.showMessageDialog(null, "Error : Matrix not square!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                sizeField.setValue(importedMatrix.GetRowCount());
+
+                MatrixIO.ImportToTable(matrixInput, importedMatrix);
 
                 page.revalidate();
                 page.repaint();
             }
         });
 
-        page.add(sizeField);
-
-        matrixArea = new JPanel(new GridBagLayout());
-        matrixArea.setBounds(0, 275, 700, 320);
-        matrixArea.setOpaque(false);
-
-        matrixField = new PrettyTable(3, 3,
-        new LabelGenerator() { public String GetLabel(int index) { return Integer.toString(index); } },
-        new LabelGenerator() { public String GetLabel(int index) { return Integer.toString(index); } });
-        matrixField.setMaximumSize(new Dimension(320, 320));
-
-        matrixArea.add(matrixField);
-
-        page.add(matrixArea);
-
-        answerLabel = new JLabel("Determinant:");
-        answerLabel.setBounds(150, 650, 198, 50);
-        answerLabel.setHorizontalAlignment(JLabel.RIGHT);
-        answerLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
-
-        page.add(answerLabel);
-
-        answer = new JLabel("");
-        answer.setBounds(352, 650, 198, 50);
-        answer.setHorizontalAlignment(JLabel.LEFT);
-        answer.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
-
-        page.add(answer);
-
-        calcButton = new JButton("Calculate");
-        calcButton.setBounds(450, 800, 200, 50);
-        calcButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
-
         calcButton.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                int size = ((Number) sizeField.getValue()).intValue();
-                Matrix matrix = new Matrix(size, size);
+                Matrix matrix = MatrixIO.ExtractFromTable(matrixInput);
 
-                for (int i = 0; i < size; i++)
-                {
-                    for (int j = 0; j < size; j++)
-                    {
-                        double val = matrixField.GetValue(i, j);
+                double det = DeterminantCofactorSolver.determinant(matrix);
 
-                        if (Double.isNaN(val))
-                        {
-                            // Shout at user
+                NumberFormat printFormat = NumberFormat.getNumberInstance();
+                printFormat.setMaximumFractionDigits(4);
 
-                            return;
-                        }
+                answerLabel.setText(printFormat.format(det));
 
-                        matrix.Set(i, j, val);
-                    }
-                }
-
-                double determinant = DeterminantCofactorSolver.determinant(matrix);
-                
-                answer.setText(NumberFormat.getNumberInstance().format(determinant));
+                page.revalidate();
+                page.repaint();
             }
         });
-
-        page.add(calcButton);
-
-        importButton = new JButton("Import");
-        importButton.setBounds(50, 800, 200, 50);
-        importButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
-
-        page.add(importButton);
-
-        page.revalidate();
-        page.repaint();
     }
-
-    private JLabel title;
-    private JPanel matrixArea;
-    private PrettyTable matrixField;
-    private JLabel sizeLabel;
-    private JFormattedTextField sizeField;
-    private JLabel answerLabel;
-    private JLabel answer;
-    private JButton calcButton;
-    private JButton importButton;
 }

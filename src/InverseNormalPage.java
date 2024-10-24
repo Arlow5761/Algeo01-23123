@@ -2,8 +2,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
 import javax.swing.*;
+import javax.swing.JSpinner.NumberEditor;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.text.NumberFormatter;
+
 import java.text.*;
 import Algeo.*;
+import Algeo.Determinant.DeterminantOBESolver;
+import Algeo.Inverse.InverseNormalSolver;
 import Algeo.Inverse.InverseOBESolver;
 
 public class InverseNormalPage extends Page
@@ -12,132 +19,124 @@ public class InverseNormalPage extends Page
     {
         page.setLayout(null);
 
-        title = new JLabel("Determinant Calculation with Cofactors");
-        title.setBounds(0, 0, 700, 200);
-        title.setHorizontalAlignment(JLabel.CENTER);
-        title.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
+        JLabel backImage = new JLabel(new ImageIcon("../assets/inverse-normal.png"));
+        backImage.setBounds(0, 0, 700, 925);
 
-        page.add(title);
+        JPanel matrixArea = new JPanel(new GridBagLayout());
+        matrixArea.setBounds(200, 470, 300, 300);
+        matrixArea.setOpaque(false);
 
-        sizeLabel = new JLabel("Matrix Size:");
-        sizeLabel.setBounds(150, 200, 198, 50);
-        sizeLabel.setHorizontalAlignment(JLabel.RIGHT);
-        sizeLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
-
-        page.add(sizeLabel);
-
-        sizeField = new JFormattedTextField(NumberFormat.getIntegerInstance());
-        sizeField.setValue(3);
-        sizeField.setBounds(352, 200, 98, 50);
-        sizeField.setHorizontalAlignment(JFormattedTextField.LEFT);
-        sizeField.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
-
-        sizeField.addPropertyChangeListener("value", new PropertyChangeListener()
+        PrettyTable matrixInput = new PrettyTable(3, 3,
+        new LabelGenerator()
         {
             @Override
-            public void propertyChange(PropertyChangeEvent e)
-            {
-                matrixField.SetCols(((Number) sizeField.getValue()).intValue());
-                matrixField.SetRows(((Number) sizeField.getValue()).intValue());
+            public String GetLabel(int index) {
+                return Integer.toString(index);
+            }
+        },
+        new LabelGenerator()
+        {
+            @Override
+            public String GetLabel(int index) {
+                return Integer.toString(index);
+            }
+        });
+        matrixInput.SetCellSize(30);
+        matrixInput.SetFontSize(12);
+        matrixInput.setMaximumSize(matrixArea.getSize());
 
-                resultMatrix.SetCols(((Number) sizeField.getValue()).intValue());
-                resultMatrix.SetRows(((Number) sizeField.getValue()).intValue());
+        JLabel sizeLabel = new JLabel("Size :");
+        sizeLabel.setHorizontalAlignment(JLabel.RIGHT);
+        sizeLabel.setBounds(295, 435, 50 ,30);
+        sizeLabel.setFont(FontManager.GetMeanwhile(12));
+
+        JSpinner sizeField = new JSpinner(new SpinnerNumberModel(3, 1, 100, 1));
+        sizeField.setBounds(355, 435, 50, 30);
+        sizeField.setFont(FontManager.GetMeanwhile(12));
+
+        NumberEditor numberEditor = new JSpinner.NumberEditor(sizeField);
+        ((NumberFormatter) numberEditor.getTextField().getFormatter()).setAllowsInvalid(false);
+
+        PrettyButton invertButton = new PrettyButton("Invert");
+        invertButton.setBounds(80, 575, 100, 30);
+
+        PrettyButton importButton = new PrettyButton("Import");
+        importButton.setBounds(530, 575, 100, 30);
+
+        sizeField.setEditor(numberEditor);
+
+        matrixArea.add(matrixInput);
+        page.add(matrixArea);
+        page.add(sizeLabel);
+        page.add(sizeField);
+        page.add(invertButton);
+        page.add(importButton);
+        
+        page.add(backImage);
+
+        page.revalidate();
+        page.repaint();
+
+        sizeField.addChangeListener(new ChangeListener()
+        {
+            @Override
+            public void stateChanged(ChangeEvent e)
+            {
+                int size = ((Number) sizeField.getValue()).intValue();
+
+                matrixInput.SetCols(size);
+                matrixInput.SetRows(size);
 
                 page.revalidate();
                 page.repaint();
             }
         });
 
-        page.add(sizeField);
-
-        matrixArea = new JPanel(new GridBagLayout());
-        matrixArea.setBounds(0, 275, 700, 320);
-        matrixArea.setOpaque(false);
-
-        GridBagConstraints g = new GridBagConstraints();
-
-        matrixField = new PrettyTable(3, 3,
-        new LabelGenerator() { public String GetLabel(int index) { return Integer.toString(index); } },
-        new LabelGenerator() { public String GetLabel(int index) { return Integer.toString(index); } });
-        matrixField.setMaximumSize(new Dimension(320, 320));
-
-        g.gridx = 0;
-        g.gridy = 0;
-
-        matrixArea.add(matrixField, g);
-
-        resultMatrix = new PrettyTable(3, 3,
-        new LabelGenerator() { public String GetLabel(int index) { return Integer.toString(index); } },
-        new LabelGenerator() { public String GetLabel(int index) { return Integer.toString(index); } });
-        resultMatrix.setMaximumSize(new Dimension(320, 320));
-        resultMatrix.SetEditable(false);
-
-        g.gridx = 2;
-        g.gridy = 0;
-
-        matrixArea.add(resultMatrix, g);
-
-        page.add(matrixArea);
-
-        calcButton = new JButton("Calculate");
-        calcButton.setBounds(450, 800, 200, 50);
-        calcButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
-
-        calcButton.addActionListener(new ActionListener()
+        importButton.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                int size = ((Number) sizeField.getValue()).intValue();
-                Matrix matrix = new Matrix(size, size);
+                Matrix importedMatrix = MatrixIO.OpenMatrix();
 
-                for (int i = 0; i < size; i++)
+                if (importedMatrix == null)
                 {
-                    for (int j = 0; j < size; j++)
-                    {
-                        double val = matrixField.GetValue(i, j);
-
-                        if (Double.isNaN(val))
-                        {
-                            // Shout at user
-
-                            return;
-                        }
-
-                        matrix.Set(i, j, val);
-                    }
+                    JOptionPane.showMessageDialog(null, "Error : Import Failed!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
 
-                Matrix inverse = InverseOBESolver.Solve(matrix);
-                
-                for (int i = 0; i < size; i++)
+                if (importedMatrix.GetColumnCount() != importedMatrix.GetRowCount())
                 {
-                    for (int j = 0; j < size; j++)
-                    {
-                        resultMatrix.SetValue(i, j, inverse.Get(i, j));
-                    }
+                    JOptionPane.showMessageDialog(null, "Error : Matrix not square!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+
+                sizeField.setValue(importedMatrix.GetRowCount());
+
+                MatrixIO.ImportToTable(matrixInput, importedMatrix);
+
+                page.revalidate();
+                page.repaint();
             }
         });
 
-        page.add(calcButton);
+        invertButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Matrix input = MatrixIO.ExtractFromTable(matrixInput);
 
-        importButton = new JButton("Import");
-        importButton.setBounds(50, 800, 200, 50);
-        importButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+                if (DeterminantOBESolver.Solve(input) == 0)
+                {
+                    JOptionPane.showMessageDialog(null, "This matrix has no inverse!", "Operation Failed", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-        page.add(importButton);
+                Matrix result = InverseNormalSolver.Solve(input);
 
-        page.revalidate();
-        page.repaint();
+                MatrixIO.ImportToTable(matrixInput, result);
+            }
+        });
     }
-
-    private JLabel title;
-    private JPanel matrixArea;
-    private PrettyTable matrixField;
-    private JLabel sizeLabel;
-    private JFormattedTextField sizeField;
-    private PrettyTable resultMatrix;
-    private JButton calcButton;
-    private JButton importButton;
 }

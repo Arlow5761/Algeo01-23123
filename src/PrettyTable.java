@@ -9,6 +9,10 @@ public class PrettyTable extends JScrollPane
 
     public int GetRows() { return nRows; }
 
+    public int GetCellSize() { return cellSize; }
+
+    public int GetFontSize() { return fontSize; }
+
     public void SetCols(int nCols)
     {
         if (nCols < 1) return;
@@ -42,11 +46,12 @@ public class PrettyTable extends JScrollPane
                 for (int j = this.nCols; j < nCols; j++)
                 {
                     newFields[i][j] = new JFormattedTextField(NumberFormat.getNumberInstance());
-                    newFields[i][j].setPreferredSize(new Dimension(50, 50));
+                    newFields[i][j].setPreferredSize(new Dimension(cellSize, cellSize));
                     newFields[i][j].setOpaque(false);
                     newFields[i][j].setHorizontalAlignment(JFormattedTextField.CENTER);
-                    newFields[i][j].setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
+                    newFields[i][j].setFont(FontManager.GetMeanwhile(12));
                     newFields[i][j].setEditable(enabled);
+                    newFields[i][j].setValue(0);
                     gbc.gridy = i;
                     gbc.gridx = j;
                     tableArea.add(newFields[i][j], gbc);
@@ -56,7 +61,7 @@ public class PrettyTable extends JScrollPane
 
         inputFields = newFields;
 
-        for (int i = 0; i < this.nCols; i++)
+        for (int i = 0; i < this.nCols && columnLabels != null; i++)
         {
             topLabelArea.remove(columnLabels[i]);
         }
@@ -72,8 +77,8 @@ public class PrettyTable extends JScrollPane
         for (int i = 0; i < nCols; i++)
         {
             columnLabels[i] = new JLabel(colLabelGenerator.GetLabel(i));
-            columnLabels[i].setPreferredSize(new Dimension(50, 50));
-            columnLabels[i].setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+            columnLabels[i].setPreferredSize(new Dimension(cellSize, cellSize));
+            columnLabels[i].setFont(FontManager.GetMeanwhile(12));
             columnLabels[i].setOpaque(false);
             columnLabels[i].setHorizontalAlignment(JLabel.CENTER);
             gbc.gridx = i;
@@ -116,11 +121,12 @@ public class PrettyTable extends JScrollPane
                 for (int j = 0; j < nCols; j++)
                 {
                     newFields[i][j] = new JFormattedTextField(NumberFormat.getNumberInstance());
-                    newFields[i][j].setPreferredSize(new Dimension(50, 50));
+                    newFields[i][j].setPreferredSize(new Dimension(cellSize, cellSize));
                     newFields[i][j].setOpaque(false);
                     newFields[i][j].setHorizontalAlignment(JFormattedTextField.CENTER);
-                    newFields[i][j].setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
+                    newFields[i][j].setFont(FontManager.GetMeanwhile(12));
                     newFields[i][j].setEditable(enabled);
+                    newFields[i][j].setValue(0);
                     gbc.gridy = i;
                     gbc.gridx = j;
                     tableArea.add(newFields[i][j], gbc);
@@ -130,7 +136,7 @@ public class PrettyTable extends JScrollPane
 
         inputFields = newFields;
 
-        for (int i = 0; i < this.nRows; i++)
+        for (int i = 0; i < this.nRows && rowLabels != null; i++)
         {
             sideLabelArea.remove(rowLabels[i]);
         }
@@ -146,14 +152,74 @@ public class PrettyTable extends JScrollPane
         for (int i = 0; i < nRows; i++)
         {
             rowLabels[i] = new JLabel(rowLabelGenerator.GetLabel(i));
-            rowLabels[i].setPreferredSize(new Dimension(50, 50));
-            rowLabels[i].setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+            rowLabels[i].setPreferredSize(new Dimension(cellSize, cellSize));
+            rowLabels[i].setFont(FontManager.GetMeanwhile(12));
             rowLabels[i].setOpaque(false);
             rowLabels[i].setHorizontalAlignment(JLabel.CENTER);
             gbc.gridx = 0;
             gbc.gridy = i;
 
             sideLabelArea.add(rowLabels[i], gbc);
+        }
+    }
+
+    public void SetCellSize(int size)
+    {
+        cellSize = size;
+
+        for (int i = 0; i < inputFields.length; i++)
+        {
+            for (int j = 0; j < inputFields[i].length; j++)
+            {
+                inputFields[i][j].setPreferredSize(new Dimension(cellSize, cellSize));
+            }
+        }
+
+        for (int i = 0; i < columnLabels.length; i++)
+        {
+            columnLabels[i].setPreferredSize(new Dimension(cellSize, cellSize));
+        }
+
+        for (int j = 0; j < rowLabels.length; j++)
+        {
+            rowLabels[j].setPreferredSize(new Dimension(cellSize, cellSize));
+        }
+    }
+
+    public void SetFontSize(int size)
+    {
+        fontSize = size;
+
+        for (int i = 0; i < inputFields.length; i++)
+        {
+            for (int j = 0; j < inputFields[i].length; j++)
+            {
+                inputFields[i][j].setFont(FontManager.GetMeanwhile(fontSize));
+            }
+        }
+
+        for (int i = 0; i < columnLabels.length; i++)
+        {
+            columnLabels[i].setFont(FontManager.GetMeanwhile(fontSize));
+        }
+
+        for (int j = 0; j < rowLabels.length; j++)
+        {
+            rowLabels[j].setFont(FontManager.GetMeanwhile(fontSize));
+        }
+    }
+
+    public void SetLabelsVisible(boolean visible)
+    {
+        if (visible)
+        {
+            super.setRowHeaderView(null);
+            super.setColumnHeaderView(null);
+        }
+        else
+        {
+            super.setRowHeaderView(rowHeader);
+            super.setColumnHeaderView(columnHeader);
         }
     }
 
@@ -237,6 +303,9 @@ public class PrettyTable extends JScrollPane
     private JFormattedTextField[][] inputFields;
 
     private boolean enabled;
+
+    private int cellSize;
+    private int fontSize;
 
     @Override
     public Dimension getPreferredSize()
