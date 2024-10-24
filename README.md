@@ -24,6 +24,7 @@ This project is a **Linear Algebra Calculator** implemented using Java's Swing l
 ## Requirements
 
 - Java Development Kit (JDK) version 8 or higher
+- Minimal screen size of 1920 x 1080 pixels
 
 ## Installation
 
