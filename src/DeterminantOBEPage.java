@@ -135,6 +135,8 @@ public class DeterminantOBEPage extends Page
 
                 answerLabel.setText(printFormat.format(det));
 
+                TerminalBuffer.WriteBuffer(Double.toString(det));
+
                 page.revalidate();
                 page.repaint();
             }

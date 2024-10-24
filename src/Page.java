@@ -36,6 +36,8 @@ public abstract class Page
             }
         });
 
+        TerminalBuffer.ClearBuffer();
+
         timer.start();
     }
 

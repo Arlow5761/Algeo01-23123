@@ -167,6 +167,8 @@ public class SPLGaussJordanPage extends Page
             {
                 solutionView.removeAll();
 
+                TerminalBuffer.WriteBuffer("");
+
                 Matrix input = MatrixIO.ExtractFromTable(matrixInput);
 
                 GaussJordanSolver solver = new GaussJordanSolver(input).Solve();
@@ -184,6 +186,8 @@ public class SPLGaussJordanPage extends Page
                         solLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                         
                         solutionView.add(solLabel);
+
+                        TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(solLabel.getText()).concat("\n"));
                     }
 
                     page.revalidate();
@@ -254,6 +258,8 @@ public class SPLGaussJordanPage extends Page
                         }
                         
                         solutionView.add(solLabel);
+
+                        TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(solLabel.getText()).concat("\n"));
                     }
 
                     page.revalidate();
@@ -267,6 +273,8 @@ public class SPLGaussJordanPage extends Page
                 noSolLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                 solutionView.add(noSolLabel);
+
+                TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(noSolLabel.getText()).concat("\n"));
 
                 page.revalidate();
                 page.repaint();

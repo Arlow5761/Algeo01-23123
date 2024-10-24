@@ -348,6 +348,8 @@ public class RegressionQuadraticPage extends Page
                 
                 testResult.setText(testResultString);
 
+                TerminalBuffer.WriteBuffer(functionString + "\n" + testResultString);
+
                 page.revalidate();
                 page.repaint();
             }

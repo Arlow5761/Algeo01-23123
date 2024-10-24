@@ -81,6 +81,17 @@ public class LinearAlgebraCalculator implements ActionListener
             currentPage.Unload();
             Page.Load(new InterpolationBicubicSplinePage());
         }
+        else if (e.getSource() == save)
+        {
+            if (TerminalBuffer.ReadBuffer() == null)
+            {
+                JOptionPane.showMessageDialog(null, "There's nothing to save!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
+                TerminalBuffer.SaveBuffer();
+            }
+        }
     }
 
     public LinearAlgebraCalculator()
@@ -165,11 +176,19 @@ public class LinearAlgebraCalculator implements ActionListener
         regression.add(linear);
         regression.add(quadratic);
 
+        tools = new JMenu("Tools");
+
+        save = new JMenuItem("Save");
+        save.addActionListener(this);
+
+        tools.add(save);
+
         menuBar.add(spl);
         menuBar.add(determinant);
         menuBar.add(inverse);
         menuBar.add(interpolation);
         menuBar.add(regression);
+        menuBar.add(tools);
 
         window.setJMenuBar(menuBar);
 
@@ -183,6 +202,7 @@ public class LinearAlgebraCalculator implements ActionListener
     private JMenu inverse;
     private JMenu interpolation;
     private JMenu regression;
+    private JMenu tools;
 
     private JMenuItem gauss;
     private JMenuItem gaussjordan;
@@ -200,4 +220,6 @@ public class LinearAlgebraCalculator implements ActionListener
 
     private JMenuItem linear;
     private JMenuItem quadratic;
+
+    private JMenuItem save;
 }

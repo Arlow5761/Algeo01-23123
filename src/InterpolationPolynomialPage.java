@@ -182,6 +182,8 @@ public class InterpolationPolynomialPage extends Page
                     return;
                 }
 
+                TerminalBuffer.WriteBuffer("");
+
                 double result = interpolationResult[0];
 
                 NumberFormat fmt = NumberFormat.getNumberInstance();
@@ -211,6 +213,9 @@ public class InterpolationPolynomialPage extends Page
                 String testPointResultString = "f(".concat(fmt.format(testPoint)).concat(") = ").concat(fmt.format(result));
 
                 testPointResultLabel.setText(testPointResultString);
+
+                TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(functionString).concat("\n"));
+                TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(testPointResultString).concat("\n"));
 
                 page.revalidate();
                 page.repaint();

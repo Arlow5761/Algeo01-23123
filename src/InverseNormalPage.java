@@ -136,6 +136,20 @@ public class InverseNormalPage extends Page
                 Matrix result = InverseNormalSolver.Solve(input);
 
                 MatrixIO.ImportToTable(matrixInput, result);
+
+                TerminalBuffer.WriteBuffer("");
+
+                for (int i = 0; i < result.GetRowCount(); i++)
+                {
+                    TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(Double.toString(result.Get(i, 0))));
+
+                    for (int j = 1; j < result.GetColumnCount(); j++)
+                    {
+                        TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(" ").concat(Double.toString(result.Get(i, j))));
+                    }
+
+                    TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat("\n"));
+                }
             }
         });
     }

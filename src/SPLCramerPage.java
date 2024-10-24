@@ -150,6 +150,8 @@ public class SPLCramerPage extends Page
             {
                 solutionView.removeAll();
 
+                TerminalBuffer.WriteBuffer("");
+
                 Matrix matrix = MatrixIO.ExtractFromTable(equationMatrixInput);
 
                 double[] sols = MatrixIO.ExtractFromTable(solutionMatrixInput).GetColumn(0);
@@ -164,6 +166,8 @@ public class SPLCramerPage extends Page
                     noSolLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                     solutionView.add(noSolLabel);
+
+                    TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(noSolLabel.getText()).concat("\n"));
 
                     page.revalidate();
                     page.repaint();
@@ -182,6 +186,8 @@ public class SPLCramerPage extends Page
                         solLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                         
                         solutionView.add(solLabel);
+
+                        TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(solLabel.getText()).concat("\n"));
                     }
 
                     page.revalidate();

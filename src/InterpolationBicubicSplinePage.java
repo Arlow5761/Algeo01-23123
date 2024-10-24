@@ -156,7 +156,11 @@ public class InterpolationBicubicSplinePage extends Page
 
                 double res = BicubicSplineInterpolator.bicubicInterpolate(bicubicMatrix, a, b);
 
+                TerminalBuffer.WriteBuffer("");
+
                 fField.setValue(res);
+
+                TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(Double.toString(res)).concat("\n"));
 
                 page.revalidate();
                 page.repaint();

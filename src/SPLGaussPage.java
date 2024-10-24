@@ -155,6 +155,8 @@ public class SPLGaussPage extends Page
             {
                 solutionView.removeAll();
 
+                TerminalBuffer.WriteBuffer("");
+
                 Matrix input = MatrixIO.ExtractFromTable(matrixInput);
 
                 GaussSolver solver = new GaussSolver(input).Solve();
@@ -172,6 +174,8 @@ public class SPLGaussPage extends Page
                         solLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                         
                         solutionView.add(solLabel);
+
+                        TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(solLabel.getText()).concat("\n"));
                     }
 
                     page.revalidate();
@@ -242,6 +246,8 @@ public class SPLGaussPage extends Page
                         }
                         
                         solutionView.add(solLabel);
+
+                        TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(solLabel.getText()).concat("\n"));
                     }
 
                     page.revalidate();
@@ -255,6 +261,8 @@ public class SPLGaussPage extends Page
                 noSolLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                 solutionView.add(noSolLabel);
+
+                TerminalBuffer.WriteBuffer(TerminalBuffer.ReadBuffer().concat(noSolLabel.getText()).concat("\n"));
 
                 page.revalidate();
                 page.repaint();
