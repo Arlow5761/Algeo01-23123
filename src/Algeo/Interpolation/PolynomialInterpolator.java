@@ -10,11 +10,11 @@ public class PolynomialInterpolator {
         double[][] skibidi = {{8.0f, 2.0794f}, {9.0f,2.1972f},{9.5f, 2.2513f}};
         Matrix ligma = new Matrix(skibidi);
 
-        System.out.println(interpolate(ligma,mewing));
+        System.out.println(interpolate(ligma,mewing)[0]);
 
     }
 
-    public static double interpolate(Matrix m, double x) {//input m size = nx2
+    public static double[] interpolate(Matrix m, double x) {//input m size = nx2
         int n = m.GetRowCount(); //n berisikan jumlah baris matrix m
         Matrix A = new Matrix(n, n); // A berisikan matrix dengan size nxn
         Matrix b = new Matrix(n, 1); // b berisikan matrix dengan size nx1
@@ -39,7 +39,7 @@ public class PolynomialInterpolator {
 
         if (coeffs == null) {
             System.out.println("Tidak ada solusi unik");
-            return Float.NaN;
+            return null;
         }
 
         double y = 0.0f;
@@ -47,6 +47,14 @@ public class PolynomialInterpolator {
             y += coeffs[i] * (double) Math.pow(x, i);// x pangkat i sampe n * dari 0 sampe dibawah n * koefisien dari single solutionnya gauss sum each i = yi
         }
 
-        return y;
+        double[] res = new double[coeffs.length + 1];
+        res[0] = y;
+
+        for (int i = 0; i < coeffs.length; i++)
+        {
+            res[i + 1] = coeffs[i];
+        }
+
+        return res;
     }
 }
