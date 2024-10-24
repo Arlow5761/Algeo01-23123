@@ -339,9 +339,9 @@ public class RegressionQuadraticPage extends Page
 
                 String testResultString = "f(".concat(fmt.format(testPointMatrix.Get(1, 0)));
 
-                for (int i = 2; i < testPointMatrix.GetRowCount(); i++)
+                for (int i = 2; i < parameters + 1; i++)
                 {
-                    testResultString = testResultString.concat(", ").concat(fmt.format(testPointMatrix.Get(0, i)));
+                    testResultString = testResultString.concat(", ").concat(fmt.format(testPointMatrix.Get(i, 0)));
                 }
 
                 testResultString = testResultString.concat(") = ").concat(fmt.format(testResultValue));
