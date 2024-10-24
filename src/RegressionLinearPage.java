@@ -242,6 +242,12 @@ public class RegressionLinearPage extends Page
 
                 double[] constants = LinearRegressor.solve(pointsData);
 
+                if (constants == null)
+                {
+                    JOptionPane.showMessageDialog(null, "Multicolinearity detected.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 NumberFormat fmt = NumberFormat.getNumberInstance();
                 fmt.setMaximumFractionDigits(3);
 
