@@ -22,7 +22,8 @@ public class QuadraticRegressor {
 
         Matrix linearTerms = deleteLastColumn(m);
         Matrix quadraticTerms = createQuadraticTerms(linearTerms);
-        Matrix X = Matrix.Append(matrix1s, Matrix.Append(linearTerms, quadraticTerms));
+        Matrix interactionTerms = createInteractionTerms(linearTerms);
+        Matrix X = Matrix.Append(Matrix.Append(matrix1s, Matrix.Append(linearTerms, quadraticTerms)), interactionTerms);
 
         Matrix XT = Matrix.Transpose(X);
         Matrix augmented = Matrix.Append(Matrix.Multiply(XT, X), Matrix.Multiply(XT, matrixYs));
@@ -48,5 +49,19 @@ public class QuadraticRegressor {
             }
         }
         return quadraticTerms;
+    }
+
+    private static Matrix createInteractionTerms(Matrix linearTerms) {
+        Matrix interactionTerms = new Matrix(linearTerms.GetRowCount(), (linearTerms.GetColumnCount() - 1) * linearTerms.GetColumnCount() / 2);
+        int count = 0;
+        for (int i = 0; i < linearTerms.GetColumnCount() - 1; i++) {
+            for (int j = 0; j < linearTerms.GetColumnCount(); j++) {
+                for (int r = 0; r < linearTerms.GetRowCount(); r++) {
+                    interactionTerms.Set(r, count, linearTerms.Get(r, i) * linearTerms.Get(r, j));
+                }
+                count++;
+            }
+        }
+        return interactionTerms;
     }
 }
