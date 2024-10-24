@@ -151,17 +151,10 @@ public class InterpolationBicubicSplinePage extends Page
             {
                 Matrix bicubicMatrix = MatrixIO.ExtractFromTable(functionProperties);
 
-                double[][] bicubicParams = new double[4][4];
-
-                for (int i = 0; i < 4; i++)
-                {
-                    bicubicParams[i] = bicubicMatrix.GetRow(i);
-                }
-
                 double a = ((Number) aField.getValue()).doubleValue();
                 double b = ((Number) bField.getValue()).doubleValue();
 
-                double res = BicubicSplineInterpolator.bicubicInterpolate(bicubicParams, a, b);
+                double res = BicubicSplineInterpolator.bicubicInterpolate(bicubicMatrix, a, b);
 
                 fField.setValue(res);
 
