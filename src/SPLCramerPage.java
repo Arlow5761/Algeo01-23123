@@ -177,8 +177,8 @@ public class SPLCramerPage extends Page
                 {
                     for (int i = 0; i < solution.length; i++)
                     {
-                        JLabel solLabel = new JLabel("X".concat(Integer.toString(i)).concat(" : ").concat(Double.toString(solution[i])));
-                        solLabel.setFont(FontManager.GetMeanwhile(14));
+                        JLabel solLabel = new JLabel("X".concat(Integer.toString(i)).concat(" = ").concat(Double.toString(solution[i])));
+                        solLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
                         solLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                         
                         solutionView.add(solLabel);

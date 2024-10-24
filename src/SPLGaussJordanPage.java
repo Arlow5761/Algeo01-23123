@@ -1,5 +1,6 @@
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -178,8 +179,8 @@ public class SPLGaussJordanPage extends Page
                 {
                     for (int i = 0; i < singleSolution.length; i++)
                     {
-                        JLabel solLabel = new JLabel("X".concat(Integer.toString(i)).concat(" : ").concat(Double.toString(singleSolution[i])));
-                        solLabel.setFont(FontManager.GetMeanwhile(14));
+                        JLabel solLabel = new JLabel("X".concat(Integer.toString(i)).concat(" = ").concat(Double.toString(singleSolution[i])));
+                        solLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
                         solLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                         
                         solutionView.add(solLabel);
@@ -197,13 +198,13 @@ public class SPLGaussJordanPage extends Page
                 {
                     for (int i = 0; i < multiSolution.length; i++)
                     {
-                        JLabel solLabel = new JLabel("X".concat(Integer.toString(i)).concat(" : "));
-                        solLabel.setFont(FontManager.GetMeanwhile(14));
+                        JLabel solLabel = new JLabel("X".concat(Integer.toString(i)).concat(" = "));
+                        solLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
                         solLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                         if (multiSolution[i] == null)
                         {
-                            solLabel.setText(solLabel.getText().concat("t".concat(Integer.toString(i))));
+                            solLabel.setText(solLabel.getText().concat("t").concat(Integer.toString(i)));
                         }
                         else
                         {
@@ -235,7 +236,7 @@ public class SPLGaussJordanPage extends Page
                                     solLabel.setText(solLabel.getText().concat(" + ").concat(out));
                                 }
 
-                                solLabel.setText(solLabel.getText().concat("T").concat(Integer.toString(j)));
+                                solLabel.setText(solLabel.getText().concat("(t").concat(Integer.toString(j)).concat(")"));
                             }
 
                             if (multiSolution[i][multiSolution.length - 1] < 0)

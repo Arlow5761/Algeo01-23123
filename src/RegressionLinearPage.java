@@ -93,8 +93,7 @@ public class RegressionLinearPage extends Page
         functionResultView.setOpaque(false);
 
         JLabel functionResult = new JLabel("");
-        functionResult.setFont(FontManager.GetMeanwhile(14));
-        functionResult.setOpaque(true);
+        functionResult.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
 
         GridBagConstraints functionResultConstraint = new GridBagConstraints();
         functionResultConstraint.weighty = 1;
@@ -110,8 +109,7 @@ public class RegressionLinearPage extends Page
         testResultView.setOpaque(false);
 
         JLabel testResult = new JLabel("");
-        testResult.setFont(FontManager.GetMeanwhile(14));
-        testResult.setOpaque(true);
+        testResult.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
 
         GridBagConstraints testResultConstraint = new GridBagConstraints();
         testResultConstraint.weighty = 1;
@@ -247,7 +245,7 @@ public class RegressionLinearPage extends Page
                 NumberFormat fmt = NumberFormat.getNumberInstance();
                 fmt.setMaximumFractionDigits(3);
 
-                String functionString = "f(p) : ".concat(fmt.format(constants[0]));                
+                String functionString = "f(p) = ".concat(fmt.format(constants[0]));                
                 
                 for (int i = 1; i < constants.length; i++)
                 {
@@ -284,7 +282,7 @@ public class RegressionLinearPage extends Page
                     testResultString = testResultString.concat(", ").concat(fmt.format(testPointMatrix.Get(0, i)));
                 }
 
-                testResultString = testResultString.concat(") : ").concat(fmt.format(testResultValue));
+                testResultString = testResultString.concat(") = ").concat(fmt.format(testResultValue));
                 
                 testResult.setText(testResultString);
 
