@@ -81,11 +81,6 @@ public class LinearAlgebraCalculator implements ActionListener
             currentPage.Unload();
             Page.Load(new InterpolationBicubicSplinePage());
         }
-        else if (e.getSource() == resizeImage)
-        {
-            currentPage.Unload();
-            Page.Load(new ImageResizePage());
-        }
         else if (e.getSource() == save)
         {
             if (TerminalBuffer.ReadBuffer() == null)
@@ -181,13 +176,6 @@ public class LinearAlgebraCalculator implements ActionListener
         regression.add(linear);
         regression.add(quadratic);
 
-        utility = new JMenu("Utility");
-
-        resizeImage = new JMenuItem("Resize Image");
-        resizeImage.addActionListener(this);
-        
-        utility.add(resizeImage);
-
         tools = new JMenu("Tools");
 
         save = new JMenuItem("Save");
@@ -200,7 +188,6 @@ public class LinearAlgebraCalculator implements ActionListener
         menuBar.add(inverse);
         menuBar.add(interpolation);
         menuBar.add(regression);
-        menuBar.add(utility);
         menuBar.add(tools);
 
         window.setJMenuBar(menuBar);
@@ -215,7 +202,6 @@ public class LinearAlgebraCalculator implements ActionListener
     private JMenu inverse;
     private JMenu interpolation;
     private JMenu regression;
-    private JMenu utility;
     private JMenu tools;
 
     private JMenuItem gauss;
@@ -234,8 +220,6 @@ public class LinearAlgebraCalculator implements ActionListener
 
     private JMenuItem linear;
     private JMenuItem quadratic;
-
-    private JMenuItem resizeImage;
 
     private JMenuItem save;
 }
