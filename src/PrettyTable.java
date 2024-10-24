@@ -46,7 +46,7 @@ public class PrettyTable extends JScrollPane
                 for (int j = this.nCols; j < nCols; j++)
                 {
                     newFields[i][j] = new JFormattedTextField(NumberFormat.getNumberInstance());
-                    newFields[i][j].setPreferredSize(new Dimension(30, 30));
+                    newFields[i][j].setPreferredSize(new Dimension(cellSize, cellSize));
                     newFields[i][j].setOpaque(false);
                     newFields[i][j].setHorizontalAlignment(JFormattedTextField.CENTER);
                     newFields[i][j].setFont(FontManager.GetMeanwhile(12));
@@ -77,7 +77,7 @@ public class PrettyTable extends JScrollPane
         for (int i = 0; i < nCols; i++)
         {
             columnLabels[i] = new JLabel(colLabelGenerator.GetLabel(i));
-            columnLabels[i].setPreferredSize(new Dimension(30, 30));
+            columnLabels[i].setPreferredSize(new Dimension(cellSize, cellSize));
             columnLabels[i].setFont(FontManager.GetMeanwhile(12));
             columnLabels[i].setOpaque(false);
             columnLabels[i].setHorizontalAlignment(JLabel.CENTER);
@@ -121,7 +121,7 @@ public class PrettyTable extends JScrollPane
                 for (int j = 0; j < nCols; j++)
                 {
                     newFields[i][j] = new JFormattedTextField(NumberFormat.getNumberInstance());
-                    newFields[i][j].setPreferredSize(new Dimension(30, 30));
+                    newFields[i][j].setPreferredSize(new Dimension(cellSize, cellSize));
                     newFields[i][j].setOpaque(false);
                     newFields[i][j].setHorizontalAlignment(JFormattedTextField.CENTER);
                     newFields[i][j].setFont(FontManager.GetMeanwhile(12));
@@ -152,7 +152,7 @@ public class PrettyTable extends JScrollPane
         for (int i = 0; i < nRows; i++)
         {
             rowLabels[i] = new JLabel(rowLabelGenerator.GetLabel(i));
-            rowLabels[i].setPreferredSize(new Dimension(30, 30));
+            rowLabels[i].setPreferredSize(new Dimension(cellSize, cellSize));
             rowLabels[i].setFont(FontManager.GetMeanwhile(12));
             rowLabels[i].setOpaque(false);
             rowLabels[i].setHorizontalAlignment(JLabel.CENTER);
